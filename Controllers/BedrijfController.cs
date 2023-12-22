@@ -13,9 +13,9 @@ namespace WDPR_i_API.Controllers
     [ApiController]
     public class BedrijfController : ControllerBase
     {
-        private readonly BedrijfContext _context;
+        private readonly WesselWestSideContext _context;
 
-        public BedrijfController(BedrijfContext context)
+        public BedrijfController(WesselWestSideContext context)
         {
             _context = context;
         }
@@ -87,7 +87,7 @@ namespace WDPR_i_API.Controllers
         {
           if (_context.Bedrijf == null)
           {
-              return Problem("Entity set 'BedrijfContext.Bedrijf'  is null.");
+              return Problem("Entity set 'WesselWestSideContext.Bedrijf'  is null.");
           }
             _context.Bedrijf.Add(bedrijf);
             await _context.SaveChangesAsync();

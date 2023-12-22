@@ -5,61 +5,61 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Onderzoeken;
+using Accounts;
 
 namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OnderzoekController : ControllerBase
+    public class BeperkingController : ControllerBase
     {
         private readonly WesselWestSideContext _context;
 
-        public OnderzoekController(WesselWestSideContext context)
+        public BeperkingController(WesselWestSideContext context)
         {
             _context = context;
         }
 
-        // GET: api/Onderzoek
+        // GET: api/Beperking
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
+        public async Task<ActionResult<IEnumerable<Beperking>>> GetBeperking()
         {
-          if (_context.Onderzoek == null)
+          if (_context.Beperking == null)
           {
               return NotFound();
           }
-            return await _context.Onderzoek.ToListAsync();
+            return await _context.Beperking.ToListAsync();
         }
 
-        // GET: api/Onderzoek/5
+        // GET: api/Beperking/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Onderzoek>> GetOnderzoek(int id)
+        public async Task<ActionResult<Beperking>> GetBeperking(int id)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Beperking == null)
           {
               return NotFound();
           }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
+            var beperking = await _context.Beperking.FindAsync(id);
 
-            if (onderzoek == null)
+            if (beperking == null)
             {
                 return NotFound();
             }
 
-            return onderzoek;
+            return beperking;
         }
 
-        // PUT: api/Onderzoek/5
+        // PUT: api/Beperking/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOnderzoek(int id, Onderzoek onderzoek)
+        public async Task<IActionResult> PutBeperking(int id, Beperking beperking)
         {
-            if (id != onderzoek.Id)
+            if (id != beperking.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(onderzoek).State = EntityState.Modified;
+            _context.Entry(beperking).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace WDPR_i_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OnderzoekExists(id))
+                if (!BeperkingExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +80,44 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Onderzoek
+        // POST: api/Beperking
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Onderzoek>> PostOnderzoek(Onderzoek onderzoek)
+        public async Task<ActionResult<Beperking>> PostBeperking(Beperking beperking)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Beperking == null)
           {
-              return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
+              return Problem("Entity set 'WesselWestSideContext.Beperking'  is null.");
           }
-            _context.Onderzoek.Add(onderzoek);
+            _context.Beperking.Add(beperking);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
+            return CreatedAtAction("GetBeperking", new { id = beperking.Id }, beperking);
         }
 
-        // DELETE: api/Onderzoek/5
+        // DELETE: api/Beperking/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOnderzoek(int id)
+        public async Task<IActionResult> DeleteBeperking(int id)
         {
-            if (_context.Onderzoek == null)
+            if (_context.Beperking == null)
             {
                 return NotFound();
             }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
-            if (onderzoek == null)
+            var beperking = await _context.Beperking.FindAsync(id);
+            if (beperking == null)
             {
                 return NotFound();
             }
 
-            _context.Onderzoek.Remove(onderzoek);
+            _context.Beperking.Remove(beperking);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OnderzoekExists(int id)
+        private bool BeperkingExists(int id)
         {
-            return (_context.Onderzoek?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Beperking?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -13,9 +13,9 @@ namespace WDPR_i_API.Controllers
     [ApiController]
     public class BeheerderController : ControllerBase
     {
-        private readonly BeheerderContext _context;
+        private readonly WesselWestSideContext _context;
 
-        public BeheerderController(BeheerderContext context)
+        public BeheerderController(WesselWestSideContext context)
         {
             _context = context;
         }
@@ -87,7 +87,7 @@ namespace WDPR_i_API.Controllers
         {
           if (_context.Beheerder == null)
           {
-              return Problem("Entity set 'BeheerderContext.Beheerder'  is null.");
+              return Problem("Entity set 'WesselWestSideContext.Beheerder'  is null.");
           }
             _context.Beheerder.Add(beheerder);
             await _context.SaveChangesAsync();

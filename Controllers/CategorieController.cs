@@ -11,55 +11,55 @@ namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OnderzoekController : ControllerBase
+    public class CategorieController : ControllerBase
     {
         private readonly WesselWestSideContext _context;
 
-        public OnderzoekController(WesselWestSideContext context)
+        public CategorieController(WesselWestSideContext context)
         {
             _context = context;
         }
 
-        // GET: api/Onderzoek
+        // GET: api/Categorie
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
+        public async Task<ActionResult<IEnumerable<Categorie>>> GetCategorie()
         {
-          if (_context.Onderzoek == null)
+          if (_context.Categorie == null)
           {
               return NotFound();
           }
-            return await _context.Onderzoek.ToListAsync();
+            return await _context.Categorie.ToListAsync();
         }
 
-        // GET: api/Onderzoek/5
+        // GET: api/Categorie/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Onderzoek>> GetOnderzoek(int id)
+        public async Task<ActionResult<Categorie>> GetCategorie(int id)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Categorie == null)
           {
               return NotFound();
           }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
+            var categorie = await _context.Categorie.FindAsync(id);
 
-            if (onderzoek == null)
+            if (categorie == null)
             {
                 return NotFound();
             }
 
-            return onderzoek;
+            return categorie;
         }
 
-        // PUT: api/Onderzoek/5
+        // PUT: api/Categorie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOnderzoek(int id, Onderzoek onderzoek)
+        public async Task<IActionResult> PutCategorie(int id, Categorie categorie)
         {
-            if (id != onderzoek.Id)
+            if (id != categorie.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(onderzoek).State = EntityState.Modified;
+            _context.Entry(categorie).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace WDPR_i_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OnderzoekExists(id))
+                if (!CategorieExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +80,44 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Onderzoek
+        // POST: api/Categorie
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Onderzoek>> PostOnderzoek(Onderzoek onderzoek)
+        public async Task<ActionResult<Categorie>> PostCategorie(Categorie categorie)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Categorie == null)
           {
-              return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
+              return Problem("Entity set 'WesselWestSideContext.Categorie'  is null.");
           }
-            _context.Onderzoek.Add(onderzoek);
+            _context.Categorie.Add(categorie);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
+            return CreatedAtAction("GetCategorie", new { id = categorie.Id }, categorie);
         }
 
-        // DELETE: api/Onderzoek/5
+        // DELETE: api/Categorie/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOnderzoek(int id)
+        public async Task<IActionResult> DeleteCategorie(int id)
         {
-            if (_context.Onderzoek == null)
+            if (_context.Categorie == null)
             {
                 return NotFound();
             }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
-            if (onderzoek == null)
+            var categorie = await _context.Categorie.FindAsync(id);
+            if (categorie == null)
             {
                 return NotFound();
             }
 
-            _context.Onderzoek.Remove(onderzoek);
+            _context.Categorie.Remove(categorie);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OnderzoekExists(int id)
+        private bool CategorieExists(int id)
         {
-            return (_context.Onderzoek?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Categorie?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

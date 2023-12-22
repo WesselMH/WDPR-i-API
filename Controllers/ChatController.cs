@@ -5,61 +5,61 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Onderzoeken;
+using BerichtenOpties;
 
 namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OnderzoekController : ControllerBase
+    public class ChatController : ControllerBase
     {
         private readonly WesselWestSideContext _context;
 
-        public OnderzoekController(WesselWestSideContext context)
+        public ChatController(WesselWestSideContext context)
         {
             _context = context;
         }
 
-        // GET: api/Onderzoek
+        // GET: api/Chat
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
+        public async Task<ActionResult<IEnumerable<Chat>>> GetChat()
         {
-          if (_context.Onderzoek == null)
+          if (_context.Chat == null)
           {
               return NotFound();
           }
-            return await _context.Onderzoek.ToListAsync();
+            return await _context.Chat.ToListAsync();
         }
 
-        // GET: api/Onderzoek/5
+        // GET: api/Chat/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Onderzoek>> GetOnderzoek(int id)
+        public async Task<ActionResult<Chat>> GetChat(int id)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Chat == null)
           {
               return NotFound();
           }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
+            var chat = await _context.Chat.FindAsync(id);
 
-            if (onderzoek == null)
+            if (chat == null)
             {
                 return NotFound();
             }
 
-            return onderzoek;
+            return chat;
         }
 
-        // PUT: api/Onderzoek/5
+        // PUT: api/Chat/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOnderzoek(int id, Onderzoek onderzoek)
+        public async Task<IActionResult> PutChat(int id, Chat chat)
         {
-            if (id != onderzoek.Id)
+            if (id != chat.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(onderzoek).State = EntityState.Modified;
+            _context.Entry(chat).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace WDPR_i_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OnderzoekExists(id))
+                if (!ChatExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +80,44 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Onderzoek
+        // POST: api/Chat
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Onderzoek>> PostOnderzoek(Onderzoek onderzoek)
+        public async Task<ActionResult<Chat>> PostChat(Chat chat)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Chat == null)
           {
-              return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
+              return Problem("Entity set 'WesselWestSideContext.Chat'  is null.");
           }
-            _context.Onderzoek.Add(onderzoek);
+            _context.Chat.Add(chat);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
+            return CreatedAtAction("GetChat", new { id = chat.Id }, chat);
         }
 
-        // DELETE: api/Onderzoek/5
+        // DELETE: api/Chat/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOnderzoek(int id)
+        public async Task<IActionResult> DeleteChat(int id)
         {
-            if (_context.Onderzoek == null)
+            if (_context.Chat == null)
             {
                 return NotFound();
             }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
-            if (onderzoek == null)
+            var chat = await _context.Chat.FindAsync(id);
+            if (chat == null)
             {
                 return NotFound();
             }
 
-            _context.Onderzoek.Remove(onderzoek);
+            _context.Chat.Remove(chat);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OnderzoekExists(int id)
+        private bool ChatExists(int id)
         {
-            return (_context.Onderzoek?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Chat?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

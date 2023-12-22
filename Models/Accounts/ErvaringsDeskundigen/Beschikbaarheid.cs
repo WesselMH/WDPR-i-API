@@ -1,6 +1,6 @@
 namespace Accounts;
 
-public class Beschrikbaarheid
+public class Beschikbaarheid
 {
     public int Id { get; set; }
     public ErvaringsDeskundige ErvaringsDeskundige { get; set; }

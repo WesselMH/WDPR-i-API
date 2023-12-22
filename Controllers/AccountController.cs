@@ -5,61 +5,61 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Onderzoeken;
+using Accounts;
 
 namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OnderzoekController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly WesselWestSideContext _context;
 
-        public OnderzoekController(WesselWestSideContext context)
+        public AccountController(WesselWestSideContext context)
         {
             _context = context;
         }
 
-        // GET: api/Onderzoek
+        // GET: api/Account
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
+        public async Task<ActionResult<IEnumerable<Account>>> GetAccount()
         {
-          if (_context.Onderzoek == null)
+          if (_context.Account == null)
           {
               return NotFound();
           }
-            return await _context.Onderzoek.ToListAsync();
+            return await _context.Account.ToListAsync();
         }
 
-        // GET: api/Onderzoek/5
+        // GET: api/Account/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Onderzoek>> GetOnderzoek(int id)
+        public async Task<ActionResult<Account>> GetAccount(int id)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Account == null)
           {
               return NotFound();
           }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
+            var account = await _context.Account.FindAsync(id);
 
-            if (onderzoek == null)
+            if (account == null)
             {
                 return NotFound();
             }
 
-            return onderzoek;
+            return account;
         }
 
-        // PUT: api/Onderzoek/5
+        // PUT: api/Account/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOnderzoek(int id, Onderzoek onderzoek)
+        public async Task<IActionResult> PutAccount(int id, Account account)
         {
-            if (id != onderzoek.Id)
+            if (id != account.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(onderzoek).State = EntityState.Modified;
+            _context.Entry(account).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace WDPR_i_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OnderzoekExists(id))
+                if (!AccountExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +80,44 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Onderzoek
+        // POST: api/Account
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Onderzoek>> PostOnderzoek(Onderzoek onderzoek)
+        public async Task<ActionResult<Account>> PostAccount(Account account)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Account == null)
           {
-              return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
+              return Problem("Entity set 'WesselWestSideContext.Account'  is null.");
           }
-            _context.Onderzoek.Add(onderzoek);
+            _context.Account.Add(account);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
+            return CreatedAtAction("GetAccount", new { id = account.Id }, account);
         }
 
-        // DELETE: api/Onderzoek/5
+        // DELETE: api/Account/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOnderzoek(int id)
+        public async Task<IActionResult> DeleteAccount(int id)
         {
-            if (_context.Onderzoek == null)
+            if (_context.Account == null)
             {
                 return NotFound();
             }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
-            if (onderzoek == null)
+            var account = await _context.Account.FindAsync(id);
+            if (account == null)
             {
                 return NotFound();
             }
 
-            _context.Onderzoek.Remove(onderzoek);
+            _context.Account.Remove(account);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OnderzoekExists(int id)
+        private bool AccountExists(int id)
         {
-            return (_context.Onderzoek?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Account?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

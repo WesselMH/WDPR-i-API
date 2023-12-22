@@ -13,9 +13,9 @@ namespace WDPR_i_API.Controllers
     [ApiController]
     public class ErvaringsDeskundigeController : ControllerBase
     {
-        private readonly ErvaringsDeskundigeContext _context;
+        private readonly WesselWestSideContext _context;
 
-        public ErvaringsDeskundigeController(ErvaringsDeskundigeContext context)
+        public ErvaringsDeskundigeController(WesselWestSideContext context)
         {
             _context = context;
         }
@@ -87,7 +87,7 @@ namespace WDPR_i_API.Controllers
         {
           if (_context.ErvaringsDeskundige == null)
           {
-              return Problem("Entity set 'ErvaringsDeskundigeContext.ErvaringsDeskundige'  is null.");
+              return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
           }
             _context.ErvaringsDeskundige.Add(ervaringsDeskundige);
             await _context.SaveChangesAsync();

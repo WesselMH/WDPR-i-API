@@ -3,15 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<OnderzoekContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("OnderzoekContext") ?? throw new InvalidOperationException("Connection string 'OnderzoekContext' not found.")));
-builder.Services.AddDbContext<ErvaringsDeskundigeContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ErvaringsDeskundigeContext") ?? throw new InvalidOperationException("Connection string 'ErvaringsDeskundigeContext' not found.")));
-builder.Services.AddDbContext<BeheerderContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BeheerderContext") ?? throw new InvalidOperationException("Connection string 'BeheerderContext' not found.")));
-builder.Services.AddDbContext<BedrijfContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BedrijfContext") ?? throw new InvalidOperationException("Connection string 'BedrijfContext' not found.")));
-
+builder.Services.AddDbContext<WesselWestSideContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING") ?? throw new InvalidOperationException("Connection string 'WesselWestSideContext' not found.")));
 
 // Add services to the container.
 
@@ -24,11 +17,11 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 
 app.UseHttpsRedirection();
 

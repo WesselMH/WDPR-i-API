@@ -5,61 +5,61 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Onderzoeken;
+using Accounts;
 
 namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OnderzoekController : ControllerBase
+    public class BenaderingController : ControllerBase
     {
         private readonly WesselWestSideContext _context;
 
-        public OnderzoekController(WesselWestSideContext context)
+        public BenaderingController(WesselWestSideContext context)
         {
             _context = context;
         }
 
-        // GET: api/Onderzoek
+        // GET: api/Benadering
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
+        public async Task<ActionResult<IEnumerable<Benadering>>> GetBenadering()
         {
-          if (_context.Onderzoek == null)
+          if (_context.Benadering == null)
           {
               return NotFound();
           }
-            return await _context.Onderzoek.ToListAsync();
+            return await _context.Benadering.ToListAsync();
         }
 
-        // GET: api/Onderzoek/5
+        // GET: api/Benadering/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Onderzoek>> GetOnderzoek(int id)
+        public async Task<ActionResult<Benadering>> GetBenadering(int id)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Benadering == null)
           {
               return NotFound();
           }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
+            var benadering = await _context.Benadering.FindAsync(id);
 
-            if (onderzoek == null)
+            if (benadering == null)
             {
                 return NotFound();
             }
 
-            return onderzoek;
+            return benadering;
         }
 
-        // PUT: api/Onderzoek/5
+        // PUT: api/Benadering/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOnderzoek(int id, Onderzoek onderzoek)
+        public async Task<IActionResult> PutBenadering(int id, Benadering benadering)
         {
-            if (id != onderzoek.Id)
+            if (id != benadering.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(onderzoek).State = EntityState.Modified;
+            _context.Entry(benadering).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace WDPR_i_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OnderzoekExists(id))
+                if (!BenaderingExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +80,44 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Onderzoek
+        // POST: api/Benadering
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Onderzoek>> PostOnderzoek(Onderzoek onderzoek)
+        public async Task<ActionResult<Benadering>> PostBenadering(Benadering benadering)
         {
-          if (_context.Onderzoek == null)
+          if (_context.Benadering == null)
           {
-              return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
+              return Problem("Entity set 'WesselWestSideContext.Benadering'  is null.");
           }
-            _context.Onderzoek.Add(onderzoek);
+            _context.Benadering.Add(benadering);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
+            return CreatedAtAction("GetBenadering", new { id = benadering.Id }, benadering);
         }
 
-        // DELETE: api/Onderzoek/5
+        // DELETE: api/Benadering/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOnderzoek(int id)
+        public async Task<IActionResult> DeleteBenadering(int id)
         {
-            if (_context.Onderzoek == null)
+            if (_context.Benadering == null)
             {
                 return NotFound();
             }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
-            if (onderzoek == null)
+            var benadering = await _context.Benadering.FindAsync(id);
+            if (benadering == null)
             {
                 return NotFound();
             }
 
-            _context.Onderzoek.Remove(onderzoek);
+            _context.Benadering.Remove(benadering);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool OnderzoekExists(int id)
+        private bool BenaderingExists(int id)
         {
-            return (_context.Onderzoek?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Benadering?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

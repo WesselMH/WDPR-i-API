@@ -1,3 +1,4 @@
+
 namespace Accounts;
 
 public class ErvaringsDeskundige : Account
@@ -7,7 +8,7 @@ public class ErvaringsDeskundige : Account
     public DateTime GeboorteDatum { get; set; }
     public string PostCode { get; set; }
     public string TelefoonNummer { get; set; }
-    // public Benaderbaar Benaderbaar { get; set; }
+    public Voogd Voogd { get; set; }
     // public Beschikbaarheid Beschikbaarheid { get; set; }
     // public Beperking Beperking { get; set; }
     
