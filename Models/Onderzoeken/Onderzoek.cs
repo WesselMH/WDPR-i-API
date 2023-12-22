@@ -1,0 +1,20 @@
+using Accounts;
+
+namespace Onderzoeken;
+
+public class Onderzoek
+{
+    public int Id { get; set; }
+    public string Titel { get; set; }
+    public string Beschrijving { get; set; }
+    public string Locatie { get; set; }
+    public string Status { get; set; }
+    public string Beloning { get; set; }
+    public DateTime Datum { get; set; }
+    public Bedrijf Uitvoerder { get; set; }
+    public Categorie SoortOnderzoek { get; set; }
+    public SelectieCriterium SelectieCriterium { get; set; }
+
+
+
+}
