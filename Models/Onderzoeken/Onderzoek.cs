@@ -13,7 +13,9 @@ public class Onderzoek
     public DateTime Datum { get; set; }
     public Bedrijf Uitvoerder { get; set; }
     public Categorie SoortOnderzoek { get; set; }
-    public SelectieCriterium SelectieCriterium { get; set; }
+
+    //dit zou toch een lijst moeten zijn omdat we meer dan 1 selectie criteria kunnen hebben? en nullable omdat en onderzoeken zullen zijn zonder specificatie
+    public List<SelectieCriterium>? SelectieCriterium { get; set; }
 
 
 

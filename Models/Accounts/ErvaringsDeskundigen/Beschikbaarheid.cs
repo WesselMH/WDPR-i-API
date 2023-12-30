@@ -8,7 +8,7 @@ public class Beschikbaarheid
     public DateTime StartTijd { get; set; }
     public DateTime EindTijd { get; set; }
 
-
-
-
+//heb nog een nagedacht over waar en hoe we dingen ophalen en volgenmij is dit betere optie en zouden we het ORM hier classes moeten voor laten maken als nodig
+    public List<BenaderOptie> benadering { get; set; }
+    
 }
