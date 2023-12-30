@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Accounts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WDPR_i_API.Controllers
 {
+    [Authorize(Roles = "beheerder, ervaringsDeskundige")]
     [Route("api/[controller]")]
     [ApiController]
     public class HulpmiddelController : ControllerBase
@@ -51,6 +53,7 @@ namespace WDPR_i_API.Controllers
 
         // PUT: api/Hulpmiddel/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "beheerder")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHulpmiddel(int id, Hulpmiddel hulpmiddel)
         {
@@ -82,6 +85,7 @@ namespace WDPR_i_API.Controllers
 
         // POST: api/Hulpmiddel
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "beheerder")]
         [HttpPost]
         public async Task<ActionResult<Hulpmiddel>> PostHulpmiddel(Hulpmiddel hulpmiddel)
         {
@@ -96,6 +100,7 @@ namespace WDPR_i_API.Controllers
         }
 
         // DELETE: api/Hulpmiddel/5
+        [Authorize(Roles = "beheerder")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHulpmiddel(int id)
         {

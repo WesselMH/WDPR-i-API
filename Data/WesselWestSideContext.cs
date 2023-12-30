@@ -6,8 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Accounts;
 using BerichtenOpties;
 using Onderzoeken;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-    public class WesselWestSideContext : DbContext
+public class WesselWestSideContext : IdentityDbContext
     {
         public WesselWestSideContext (DbContextOptions<WesselWestSideContext> options)
             : base(options)
