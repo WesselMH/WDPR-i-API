@@ -65,7 +65,9 @@ builder.Services.AddAuthentication(opt =>
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = "http://localhost:5155",
+        // ValidIssuer = "https://wpr-i-backend.azurewebsites.net/",
         ValidAudience = "http://localhost:5155",
+        // ValidAudience = "https://wpr-i-backend.azurewebsites.net/",
         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh98f89uawef9j8aw89hefawef")),
     };
 }
@@ -98,7 +100,8 @@ builder.Services.AddCors(options =>
         options.AddPolicy("AllowSpecificOrigin", builder =>
         {
             //verander dit naar de echte url van de app
-            builder.WithOrigins("http://localhost:3000") // Add the origin of your React app
+            builder.WithOrigins("http://localhost:3000") 
+            // builder.WithOrigins("https://wdrp-3-i.vercel.app") 
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
