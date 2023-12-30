@@ -31,6 +31,19 @@ namespace WDPR_i_API.Controllers
             _roleManager = roleManager;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="beheerder">
+        /// {
+        ///  "id": 0,
+        ///  "userName": "string",
+        ///  "gebruikersNaam": "string",
+        ///  "wachtwoord": "string",
+        ///  "emailAccounts": "string"
+        /// }
+        /// </param>
+        /// <returns></returns>
         [Authorize(Roles = "beheerder")]
         [HttpPost]
         [Route("beheerder/aanmelden")]
@@ -55,6 +68,22 @@ namespace WDPR_i_API.Controllers
         //     return Unauthorized();
         // }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bedrijf">
+        /// {
+        ///  "id": 0,
+        ///  "userName": "string",
+        ///  "gebruikersNaam": "string",
+        ///  "wachtwoord": "string",
+        ///  "emailAccounts": "string",
+        ///  "informatie": "string",
+        ///  "locatie": "string",
+        ///  "url": "string"
+        /// }
+        /// </param>
+        /// <returns></returns>
         [HttpPost]
         [Route("bedrijf/aanmelden")]
         public async Task<ActionResult<IEnumerable<Bedrijf>>> RegistreerBedrijf([FromBody] Bedrijf bedrijf)
@@ -65,6 +94,34 @@ namespace WDPR_i_API.Controllers
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ervaringsDeskundige">
+        /// {
+        ///  "id": 0,
+        ///  "userName": "string",
+        ///  "gebruikersNaam": "string",
+        ///  "wachtwoord": "string",
+        ///  "emailAccounts": "string",
+        ///  "voornaam": "string",
+        ///  "achternaam": "string",
+        ///  "geboorteDatum": "2023-12-30T19:34:08.167Z",
+        ///  "postCode": "string",
+        ///  "telefoonNummer": "string",
+        ///  "voogd": {
+        ///    "id": 0,
+        ///    "voornaam": "string",
+        ///    "achternaam": "string",
+        ///    "geboorteDatum": "2023-12-30",
+        ///    "email": "string",
+        ///    "telefoonNummer": "string",
+        ///    "postCode": "string"
+        ///  }
+        /// }
+        /// </param>
+        /// <returns></returns>
         [HttpPost]
         [Route("ervaringsdeskundige/aanmelden")]
         public async Task<ActionResult<IEnumerable<ErvaringsDeskundige>>> RegistreerErvaringsDeskundige([FromBody] ErvaringsDeskundige ervaringsDeskundige)
@@ -75,59 +132,90 @@ namespace WDPR_i_API.Controllers
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="googleGebruiker">
+        /// {
+        ///  "id": 0,
+        ///  "gebruikersNaam": "string",
+        ///  "emailGoogle": "string",
+        ///  "sub": "string",
+        ///  {
+        ///   "id": 0,
+        ///   "userName": "string",
+        ///   "gebruikersNaam": "string",
+        ///   "wachtwoord": "string",
+        ///   "emailAccounts": "string",
+        ///   "voornaam": "string",
+        ///   "achternaam": "string",
+        ///   "geboorteDatum": "2023-12-30T19:34:08.167Z",
+        ///   "postCode": "string",
+        ///   "telefoonNummer": "string",
+        ///   "voogd": {
+        ///     "id": 0,
+        ///     "voornaam": "string",
+        ///     "achternaam": "string",
+        ///     "geboorteDatum": "2023-12-30",
+        ///     "email": "string",
+        ///     "telefoonNummer": "string",
+        ///     "postCode": "string"
+        ///   }
+        ///  }
+        /// }
+        /// </param>
+        /// <returns></returns>
         [HttpPost]
         [Route("google/aanmelden")]
         public async Task<ActionResult<IEnumerable<Google>>> RegistreerGoogle([FromBody] Google googleGebruiker)
         {
-            var resultaat = await _userManager.CreateAsync(googleGebruiker, googleGebruiker.sub);
+            var account = googleGebruiker.ervaringsDeskundige;
+            var resultaat = await _userManager.CreateAsync(account, googleGebruiker.sub);
             await _roleManager.CreateAsync(new IdentityRole { Name = "ervaringsDeskundige" });
-            await _userManager.AddToRoleAsync(googleGebruiker, "ervaringsDeskundige");
+            await _userManager.AddToRoleAsync(account, "ervaringsDeskundige");
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
 
         /// <summary>
         ///     
         /// </summary>
-        /// <param name="account"></param>
+        /// <param name="account">
+        /// {
+        ///   "id": 0,
+        ///   "userName": "string",
+        ///   "gebruikersNaam": "string",
+        ///   "wachtwoord": "string"
+        /// }
+        /// </param>
         /// <returns></returns>
-        /// <remarks>
-        /// Voorbeeld request:
-        /// 
-        /// POST /login
-        ///     {
-        ///         "id": 0,
-        ///         "userName": "string",
-        ///         "gebruikersNaam": "string",
-        ///         "wachtwoord": "string",
-        ///         "email": "string"
-        ///     }
-        /// </remarks>
         [HttpPost("login")]
         public async Task<IActionResult> LoginTest([FromBody] Account account)
         {
             var _user = await _userManager.FindByNameAsync(account.GebruikersNaam);
             if (_user != null)
-                Console.WriteLine("test");
-            if (await _userManager.CheckPasswordAsync(_user, account.Wachtwoord))
             {
-                var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh98f89uawef9j8aw89hefawef"));
-
-                var signingCredentials = new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
-                var claims = new List<Claim> { new Claim(ClaimTypes.Name, _user.UserName) };
-                var roles = await _userManager.GetRolesAsync(_user);
-                foreach (var role in roles)
+                Console.WriteLine("test");
+                if (await _userManager.CheckPasswordAsync(_user, account.Wachtwoord))
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, role));
+                    var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh98f89uawef9j8aw89hefawef"));
+
+                    var signingCredentials = new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, _user.UserName) };
+                    var roles = await _userManager.GetRolesAsync(_user);
+                    foreach (var role in roles)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role));
+                    }
+                    var tokenOptions = new JwtSecurityToken(
+                        //hier moeten we wel onze eigen domein zetten
+                        issuer: "http://localhost:5155",
+                        audience: "http://localhost:5155",
+                        claims: claims,
+                        expires: DateTime.Now.AddMinutes(10),
+                        signingCredentials: signingCredentials
+                    );
+                    return Ok(new { Token = new JwtSecurityTokenHandler().WriteToken(tokenOptions) });
                 }
-                var tokenOptions = new JwtSecurityToken(
-                    //hier moeten we wel onze eigen domein zetten
-                    issuer: "http://localhost:5155",
-                    audience: "http://localhost:5155",
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(10),
-                    signingCredentials: signingCredentials
-                );
-                return Ok(new { Token = new JwtSecurityTokenHandler().WriteToken(tokenOptions) });
             }
             //moet andere fout code nog komen zodat we fouten afhandelen
             return Unauthorized();
