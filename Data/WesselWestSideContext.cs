@@ -15,10 +15,6 @@ public class WesselWestSideContext : IdentityDbContext
     {
     }
 
-    public DbSet<Accounts.Benadering> Benadering { get; set; } = default!;
-
-    public DbSet<Accounts.Beperking> Beperking { get; set; } = default!;
-
     public DbSet<Accounts.BenaderOptie> BenaderOptie { get; set; } = default!;
 
     public DbSet<Accounts.BeperkingOptie> BeperkingOptie { get; set; } = default!;
@@ -30,8 +26,6 @@ public class WesselWestSideContext : IdentityDbContext
     public DbSet<Accounts.Google> Google { get; set; } = default!;
 
     public DbSet<Accounts.Hulpmiddel> Hulpmiddel { get; set; } = default!;
-
-    public DbSet<Accounts.TypeCategorie> TypeCategorie { get; set; } = default!;
 
     public DbSet<Accounts.Voogd> Voogd { get; set; } = default!;
 
