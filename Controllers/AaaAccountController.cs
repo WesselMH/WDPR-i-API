@@ -200,7 +200,7 @@ namespace WDPR_i_API.Controllers
                     var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh98f89uawef9j8aw89hefawef"));
 
                     var signingCredentials = new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
-                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, _user.UserName) };
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, _user.UserName), new Claim("id", _user.Id) };
                     var roles = await _userManager.GetRolesAsync(_user);
                     foreach (var role in roles)
                     {
