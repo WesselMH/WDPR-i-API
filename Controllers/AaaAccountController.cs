@@ -141,6 +141,7 @@ namespace WDPR_i_API.Controllers
         ///  "gebruikersNaam": "string",
         ///  "emailGoogle": "string",
         ///  "sub": "string",
+        ///   "ervaringsDeskundige":
         ///  {
         ///   "id": 0,
         ///   "userName": "string",
