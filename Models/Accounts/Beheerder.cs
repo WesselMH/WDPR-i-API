@@ -2,5 +2,5 @@ namespace Accounts;
 
 public class Beheerder : Account
 {
-    public string GebruikersNaam {get; set;}
+    // public string GebruikersNaam {get; set;}
 }
