@@ -195,7 +195,7 @@ namespace WDPR_i_API.Controllers
             var _user = await _userManager.FindByNameAsync(account.GebruikersNaam);
             if (_user != null)
             {
-                Console.WriteLine("test");
+                // Console.WriteLine("test");
                 if (await _userManager.CheckPasswordAsync(_user, account.Wachtwoord))
                 {
                     var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh98f89uawef9j8aw89hefawef"));
@@ -219,9 +219,9 @@ namespace WDPR_i_API.Controllers
                     );
                     return Ok(new { Token = new JwtSecurityTokenHandler().WriteToken(tokenOptions) });
                 }
+                return Unauthorized("Gebruikersnaam klopt niet met het wachtwoord!");
             }
-            //moet andere fout code nog komen zodat we fouten afhandelen
-            return Unauthorized();
+            return BadRequest("Gebruiker komt niet voor in de database!");
         }
     }
 }
