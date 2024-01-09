@@ -101,7 +101,7 @@ builder.Services.AddCors(options =>
         {
             //verander dit naar de echte url van de app
             // builder.WithOrigins("http://localhost:3000") 
-            builder.WithOrigins("https://wdrp-3-i.vercel.app") 
+            builder.WithOrigins("https://wdrp-3-i.vercel.app/") 
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
