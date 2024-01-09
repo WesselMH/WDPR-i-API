@@ -54,6 +54,20 @@ namespace WDPR_i_API.Controllers
             await _userManager.AddToRoleAsync(beheerder, "beheerder");
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
+        
+        // [HttpPost]
+        // [Route("beheerder/aanmeldenAdmin")]
+        // public async Task<ActionResult<IEnumerable<Beheerder>>> RegistreerBeheerderAdmin([FromBody] Beheerder beheerder)
+        // {
+        //     var resultaat = await _userManager.CreateAsync(beheerder, beheerder.Wachtwoord);
+        //     await _roleManager.CreateAsync(new IdentityRole { Name = "beheerder" });
+        //     await _roleManager.CreateAsync(new IdentityRole { Name = "bedrijf" });
+        //     await _roleManager.CreateAsync(new IdentityRole { Name = "ervaringsDeskundige" });
+        //     await _userManager.AddToRoleAsync(beheerder, "beheerder");
+        //     await _userManager.AddToRoleAsync(beheerder, "bedrijf");
+        //     await _userManager.AddToRoleAsync(beheerder, "ervaringsDeskundige");
+        //     return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
+        // }
 
         // [HttpPost("beheerder/login")]
         // public async Task<IActionResult> LoginBeheerder([FromBody] Beheerder beheerder)
@@ -214,7 +228,7 @@ namespace WDPR_i_API.Controllers
                         // audience: "http://localhost:5155",
                         audience: "https://wpr-i-backend.azurewebsites.net",
                         claims: claims,
-                        expires: DateTime.Now.AddMinutes(10),
+                        expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: signingCredentials
                     );
                     return Ok(new { Token = new JwtSecurityTokenHandler().WriteToken(tokenOptions) });

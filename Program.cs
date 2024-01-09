@@ -47,6 +47,8 @@ builder.Services.AddIdentityCore<IdentityUser>()
                 .AddRoleManager<RoleManager<IdentityRole>>();
 
 
+
+
 //zonder jwt tokens
 // builder.Services.AddAuthentication();
 
@@ -75,7 +77,12 @@ builder.Services.AddAuthentication(opt =>
 // builder.Services.AddAuthorization();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    // .ConfigureApiBehaviorOptions(options =>
+    // {
+    //     options.SuppressMapClientErrors = true;
+    // })
+    ;
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -107,15 +114,20 @@ builder.Services.AddCors(options =>
         });
     });
 
+// builder.Services.AddProblemDetails();
 
 
 var app = builder.Build();
+
+// app.UseExceptionHandler();
+// app.UseStatusCodePages();
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
 // {
 app.UseSwagger();
 app.UseSwaggerUI();
+// app.UseDeveloperExceptionPage();
 // }
 
 app.UseCors("AllowSpecificOrigin");
