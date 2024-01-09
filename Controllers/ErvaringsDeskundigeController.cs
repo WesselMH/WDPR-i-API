@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Accounts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WDPR_i_API.Controllers
 {
+    [Authorize(Roles = "beheerder")]
     [Route("api/[controller]")]
     [ApiController]
     public class ErvaringsDeskundigeController : ControllerBase
