@@ -110,13 +110,12 @@ builder.Services.AddCors(options =>
             // builder.WithOrigins("http://localhost:3000") 
             builder.WithOrigins("https://wdrp-3-i.vercel.app/")
                    .AllowAnyHeader()
-                   .AllowAnyMethod()
-                   .AllowAnyOrigin();
+                   .AllowAnyMethod();
         });
     });
 
 // builder.Services.AddProblemDetails();
-
+ 
 
 var app = builder.Build();
 
