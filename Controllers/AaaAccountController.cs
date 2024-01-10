@@ -121,7 +121,7 @@ namespace WDPR_i_API.Controllers
         ///  "emailAccounts": "string",
         ///  "voornaam": "string",
         ///  "achternaam": "string",
-        ///  "geboorteDatum": "2023-12-30T19:34:08.167Z",
+        ///  "geboorteDatum": "2023-12-30",
         ///  "postCode": "string",
         ///  "telefoonNummer": "string",
         ///  "voogd": {
