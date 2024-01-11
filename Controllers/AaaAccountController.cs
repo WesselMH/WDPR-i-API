@@ -54,7 +54,7 @@ namespace WDPR_i_API.Controllers
             await _userManager.AddToRoleAsync(beheerder, "beheerder");
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
-        
+
         // [HttpPost]
         // [Route("beheerder/aanmeldenAdmin")]
         // public async Task<ActionResult<IEnumerable<Beheerder>>> RegistreerBeheerderAdmin([FromBody] Beheerder beheerder)
@@ -132,7 +132,71 @@ namespace WDPR_i_API.Controllers
         ///    "email": "string",
         ///    "telefoonNummer": "string",
         ///    "postCode": "string"
-        ///  }
+        ///  },
+        ///  "onderzoeken": [
+        ///    {
+        ///      "id": 0,
+        ///      "titel": "string",
+        ///      "beschrijving": "string",
+        ///      "locatie": "string",
+        ///      "status": "string",
+        ///      "beloning": "string",
+        ///      "datum": "2024-01-11T19:14:19.304Z",
+        ///      "uitvoerder": {
+        ///        "id": 0,
+        ///        "userName": "string",
+        ///        "normalizedUserName": "string",
+        ///        "email": "string",
+        ///        "normalizedEmail": "string",
+        ///        "emailConfirmed": true,
+        ///        "passwordHash": "string",
+        ///        "securityStamp": "string",
+        ///        "concurrencyStamp": "string",
+        ///        "phoneNumber": "string",
+        ///        "phoneNumberConfirmed": true,
+        ///        "twoFactorEnabled": true,
+        ///        "lockoutEnd": "2024-01-11T19:14:19.304Z",
+        ///        "lockoutEnabled": true,
+        ///        "accessFailedCount": 0,
+        ///        "gebruikersNaam": "string",
+        ///        "wachtwoord": "string",
+        ///        "emailAccount": "string",
+        ///        "informatie": "string",
+        ///        "locatie": "string",
+        ///        "url": "string"
+        ///      },
+        ///      "soortOnderzoek": {
+        ///        "id": 0,
+        ///        "opties": "string"
+        ///      },
+        ///      "selectieCriterium": [
+        ///        {
+        ///          "id": 0,
+        ///          "typeBeperking": "string",
+        ///          "postCode": "string",
+        ///          "leeftijd": 0
+        ///        }
+        ///      ]
+        ///    }
+        ///  ],
+        ///  "beperkingen": [
+        ///    {
+        ///      "id": 0,
+        ///      "beperking": "string"
+        ///    }
+        ///  ],
+        ///  "hulpmiddelen": [
+        ///    {
+        ///      "id": 0,
+        ///      "middel": "string"
+        ///    }
+        ///  ],
+        ///  "typeOnderzoeken": [
+        ///    {
+        ///      "id": 0,
+        ///      "opties": "string"
+        ///    }
+        ///  ]
         /// }
         /// </param>
         /// <returns></returns>
@@ -164,7 +228,7 @@ namespace WDPR_i_API.Controllers
         ///   "emailAccount": "string",
         ///   "voornaam": "string",
         ///   "achternaam": "string",
-        ///   "geboorteDatum": "2023-12-30T19:34:08.167Z",
+        ///   "geboorteDatum": "2003-12-30",
         ///   "postCode": "string",
         ///   "telefoonNummer": "string",
         ///   "voogd": {
@@ -175,7 +239,71 @@ namespace WDPR_i_API.Controllers
         ///     "email": "string",
         ///     "telefoonNummer": "string",
         ///     "postCode": "string"
-        ///   }
+        ///   },
+        ///   "onderzoeken": [
+        ///     {
+        ///       "id": 0,
+        ///       "titel": "string",
+        ///       "beschrijving": "string",
+        ///       "locatie": "string",
+        ///       "status": "string",
+        ///       "beloning": "string",
+        ///       "datum": "2024-01-11T19:14:19.304Z",
+        ///       "uitvoerder": {
+        ///         "id": 0,
+        ///         "userName": "string",
+        ///         "normalizedUserName": "string",
+        ///         "email": "string",
+        ///         "normalizedEmail": "string",
+        ///         "emailConfirmed": true,
+        ///         "passwordHash": "string",
+        ///         "securityStamp": "string",
+        ///         "concurrencyStamp": "string",
+        ///         "phoneNumber": "string",
+        ///         "phoneNumberConfirmed": true,
+        ///         "twoFactorEnabled": true,
+        ///         "lockoutEnd": "2024-01-11T19:14:19.304Z",
+        ///         "lockoutEnabled": true,
+        ///         "accessFailedCount": 0,
+        ///         "gebruikersNaam": "string",
+        ///         "wachtwoord": "string",
+        ///         "emailAccount": "string",
+        ///         "informatie": "string",
+        ///         "locatie": "string",
+        ///         "url": "string"
+        ///       },
+        ///       "soortOnderzoek": {
+        ///         "id": 0,
+        ///         "opties": "string"
+        ///       },
+        ///       "selectieCriterium": [
+        ///         {
+        ///           "id": 0,
+        ///           "typeBeperking": "string",
+        ///           "postCode": "string",
+        ///           "leeftijd": 0
+        ///         }
+        ///       ]
+        ///     }
+        ///   ],
+        ///   "beperkingen": [
+        ///     {
+        ///       "id": 0,
+        ///       "beperking": "string"
+        ///     }
+        ///   ],
+        ///   "hulpmiddelen": [
+        ///     {
+        ///       "id": 0,
+        ///       "middel": "string"
+        ///     }
+        ///   ],
+        ///   "typeOnderzoeken": [
+        ///     {
+        ///       "id": 0,
+        ///       "opties": "string"
+        ///     }
+        ///   ]
         ///  }
         /// }
         /// </param>
