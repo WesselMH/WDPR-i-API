@@ -110,6 +110,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 //seeds database
-await app.SeedAsync();
+//Het werkt helaas niet met rollen
+// await app.SeedAsync();
 
 app.Run();
