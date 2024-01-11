@@ -36,10 +36,10 @@ builder.Services.AddAuthentication(opt =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        // ValidIssuer = "http://localhost:5155",
-        ValidIssuer = "https://wpr-i-backend.azurewebsites.net/",
-        // ValidAudience = "http://localhost:5155",
-        ValidAudience = "https://wpr-i-backend.azurewebsites.net/",
+        ValidIssuer = "http://localhost:5155",
+        // ValidIssuer = "https://wpr-i-backend.azurewebsites.net/",
+        ValidAudience = "http://localhost:5155",
+        // ValidAudience = "https://wpr-i-backend.azurewebsites.net/",
         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh98f89uawef9j8aw89hefawef")),
     };
 }

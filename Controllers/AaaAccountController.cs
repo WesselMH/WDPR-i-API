@@ -223,10 +223,10 @@ namespace WDPR_i_API.Controllers
                     }
                     var tokenOptions = new JwtSecurityToken(
                         //hier moeten we wel onze eigen domein zetten
-                        // issuer: "http://localhost:5155",
-                        issuer: "https://wpr-i-backend.azurewebsites.net",
-                        // audience: "http://localhost:5155",
-                        audience: "https://wpr-i-backend.azurewebsites.net",
+                        issuer: "http://localhost:5155",
+                        // issuer: "https://wpr-i-backend.azurewebsites.net",
+                        audience: "http://localhost:5155",
+                        // audience: "https://wpr-i-backend.azurewebsites.net",
                         claims: claims,
                         expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: signingCredentials
