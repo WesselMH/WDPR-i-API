@@ -54,6 +54,20 @@ namespace WDPR_i_API.Controllers
             await _userManager.AddToRoleAsync(beheerder, "beheerder");
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
+        
+        // [HttpPost]
+        // [Route("beheerder/aanmeldenAdmin")]
+        // public async Task<ActionResult<IEnumerable<Beheerder>>> RegistreerBeheerderAdmin([FromBody] Beheerder beheerder)
+        // {
+        //     var resultaat = await _userManager.CreateAsync(beheerder, beheerder.Wachtwoord);
+        //     await _roleManager.CreateAsync(new IdentityRole { Name = "beheerder" });
+        //     await _roleManager.CreateAsync(new IdentityRole { Name = "bedrijf" });
+        //     await _roleManager.CreateAsync(new IdentityRole { Name = "ervaringsDeskundige" });
+        //     await _userManager.AddToRoleAsync(beheerder, "beheerder");
+        //     await _userManager.AddToRoleAsync(beheerder, "bedrijf");
+        //     await _userManager.AddToRoleAsync(beheerder, "ervaringsDeskundige");
+        //     return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
+        // }
 
         // [HttpPost("beheerder/login")]
         // public async Task<IActionResult> LoginBeheerder([FromBody] Beheerder beheerder)
@@ -141,6 +155,7 @@ namespace WDPR_i_API.Controllers
         ///  "gebruikersNaam": "string",
         ///  "emailGoogle": "string",
         ///  "sub": "string",
+        ///   "ervaringsDeskundige":
         ///  {
         ///   "id": 0,
         ///   "userName": "string",
@@ -194,13 +209,13 @@ namespace WDPR_i_API.Controllers
             var _user = await _userManager.FindByNameAsync(account.GebruikersNaam);
             if (_user != null)
             {
-                Console.WriteLine("test");
+                // Console.WriteLine("test");
                 if (await _userManager.CheckPasswordAsync(_user, account.Wachtwoord))
                 {
                     var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh98f89uawef9j8aw89hefawef"));
 
                     var signingCredentials = new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
-                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, _user.UserName) };
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, _user.UserName), new Claim("id", _user.Id) };
                     var roles = await _userManager.GetRolesAsync(_user);
                     foreach (var role in roles)
                     {
@@ -208,17 +223,19 @@ namespace WDPR_i_API.Controllers
                     }
                     var tokenOptions = new JwtSecurityToken(
                         //hier moeten we wel onze eigen domein zetten
-                        issuer: "http://localhost:5155",
-                        audience: "http://localhost:5155",
+                        // issuer: "http://localhost:5155",
+                        issuer: "https://wpr-i-backend.azurewebsites.net",
+                        // audience: "http://localhost:5155",
+                        audience: "https://wpr-i-backend.azurewebsites.net",
                         claims: claims,
-                        expires: DateTime.Now.AddMinutes(10),
+                        expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: signingCredentials
                     );
                     return Ok(new { Token = new JwtSecurityTokenHandler().WriteToken(tokenOptions) });
                 }
+                return Unauthorized("Gebruikersnaam klopt niet met het wachtwoord!");
             }
-            //moet andere fout code nog komen zodat we fouten afhandelen
-            return Unauthorized();
+            return BadRequest("Gebruiker komt niet voor in de database!");
         }
     }
 }
