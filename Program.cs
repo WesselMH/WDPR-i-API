@@ -15,29 +15,6 @@ builder.Services.AddDbContext<WesselWestSideContext>(options =>
 
 // Add services to the container.
 
-// voor eisen aan het wachtwoord
-// builder.Services.Configure<IdentityOptions>(options =>
-// {
-//     // Password settings.
-//     options.Password.RequireDigit = true;
-//     options.Password.RequireLowercase = true;
-//     options.Password.RequireNonAlphanumeric = true;
-//     options.Password.RequireUppercase = true;
-//     options.Password.RequiredLength = 6;
-//     options.Password.RequiredUniqueChars = 1;
-
-//     // Lockout settings.
-//     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-//     options.Lockout.MaxFailedAccessAttempts = 5;
-//     options.Lockout.AllowedForNewUsers = true;
-
-//     // User settings.
-//     options.User.AllowedUserNameCharacters =
-//     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-//     options.User.RequireUniqueEmail = false;
-// });
-
-//verander Identityuser naar je eigen gebruiker
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<WesselWestSideContext>()
                 .AddDefaultTokenProviders();
@@ -45,11 +22,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddIdentityCore<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddRoleManager<RoleManager<IdentityRole>>();
-
-
-//zonder jwt tokens
-// builder.Services.AddAuthentication();
-
 
 //met jwt tokens
 builder.Services.AddAuthentication(opt =>
@@ -122,5 +94,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//seeds database
+await app.SeedAsync();
 
 app.Run();

@@ -40,7 +40,7 @@ namespace WDPR_i_API.Controllers
         ///  "userName": "string",
         ///  "gebruikersNaam": "string",
         ///  "wachtwoord": "string",
-        ///  "emailAccounts": "string"
+        ///  "emailAccount": "string"
         /// }
         /// </param>
         /// <returns></returns>
@@ -77,7 +77,7 @@ namespace WDPR_i_API.Controllers
         ///  "userName": "string",
         ///  "gebruikersNaam": "string",
         ///  "wachtwoord": "string",
-        ///  "emailAccounts": "string",
+        ///  "emailAccount": "string",
         ///  "informatie": "string",
         ///  "locatie": "string",
         ///  "url": "string"
@@ -104,7 +104,7 @@ namespace WDPR_i_API.Controllers
         ///  "userName": "string",
         ///  "gebruikersNaam": "string",
         ///  "wachtwoord": "string",
-        ///  "emailAccounts": "string",
+        ///  "emailAccount": "string",
         ///  "voornaam": "string",
         ///  "achternaam": "string",
         ///  "geboorteDatum": "2023-12-30T19:34:08.167Z",
@@ -146,7 +146,7 @@ namespace WDPR_i_API.Controllers
         ///   "userName": "string",
         ///   "gebruikersNaam": "string",
         ///   "wachtwoord": "string",
-        ///   "emailAccounts": "string",
+        ///   "emailAccount": "string",
         ///   "voornaam": "string",
         ///   "achternaam": "string",
         ///   "geboorteDatum": "2023-12-30T19:34:08.167Z",
