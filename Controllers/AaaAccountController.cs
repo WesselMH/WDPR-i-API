@@ -55,19 +55,19 @@ namespace WDPR_i_API.Controllers
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
         
-        // [HttpPost]
-        // [Route("beheerder/aanmeldenAdmin")]
-        // public async Task<ActionResult<IEnumerable<Beheerder>>> RegistreerBeheerderAdmin([FromBody] Beheerder beheerder)
-        // {
-        //     var resultaat = await _userManager.CreateAsync(beheerder, beheerder.Wachtwoord);
-        //     await _roleManager.CreateAsync(new IdentityRole { Name = "beheerder" });
-        //     await _roleManager.CreateAsync(new IdentityRole { Name = "bedrijf" });
-        //     await _roleManager.CreateAsync(new IdentityRole { Name = "ervaringsDeskundige" });
-        //     await _userManager.AddToRoleAsync(beheerder, "beheerder");
-        //     await _userManager.AddToRoleAsync(beheerder, "bedrijf");
-        //     await _userManager.AddToRoleAsync(beheerder, "ervaringsDeskundige");
-        //     return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
-        // }
+        [HttpPost]
+        [Route("beheerder/aanmeldenAdmin")]
+        public async Task<ActionResult<IEnumerable<Beheerder>>> RegistreerBeheerderAdmin([FromBody] Beheerder beheerder)
+        {
+            var resultaat = await _userManager.CreateAsync(beheerder, beheerder.Wachtwoord);
+            await _roleManager.CreateAsync(new IdentityRole { Name = "beheerder" });
+            await _roleManager.CreateAsync(new IdentityRole { Name = "bedrijf" });
+            await _roleManager.CreateAsync(new IdentityRole { Name = "ervaringsDeskundige" });
+            await _userManager.AddToRoleAsync(beheerder, "beheerder");
+            await _userManager.AddToRoleAsync(beheerder, "bedrijf");
+            await _userManager.AddToRoleAsync(beheerder, "ervaringsDeskundige");
+            return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
+        }
 
         // [HttpPost("beheerder/login")]
         // public async Task<IActionResult> LoginBeheerder([FromBody] Beheerder beheerder)

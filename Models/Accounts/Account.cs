@@ -9,5 +9,5 @@ public class Account : IdentityUser
     public string Wachtwoord { get; set; }
 
     //om een of andere reden is email bij mij hele tijd null. even iets op verzinnen
-    public string? EmailAccounts { get; set; }
+    public string? EmailAccount { get; set; }
 }

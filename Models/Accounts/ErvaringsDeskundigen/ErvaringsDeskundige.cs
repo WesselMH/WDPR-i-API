@@ -14,4 +14,6 @@ public class ErvaringsDeskundige : Account
     public string PostCode { get; set; }
     public string TelefoonNummer { get; set; }
     public Voogd? Voogd { get; set; }
+
+    public List<Hulpmiddel>? Hulpmiddelen { get; set; }
 }
