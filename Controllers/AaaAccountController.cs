@@ -185,7 +185,7 @@ namespace WDPR_i_API.Controllers
         public async Task<ActionResult<IEnumerable<Google>>> RegistreerGoogle([FromBody] Google googleGebruiker)
         {
             var account = googleGebruiker.ervaringsDeskundige;
-            var resultaat = await _userManager.CreateAsync(account, googleGebruiker.sub);
+            var resultaat = await _userManager.CreateAsync(account, account.Wachtwoord);
             await _roleManager.CreateAsync(new IdentityRole { Name = "ervaringsDeskundige" });
             await _userManager.AddToRoleAsync(account, "ervaringsDeskundige");
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
