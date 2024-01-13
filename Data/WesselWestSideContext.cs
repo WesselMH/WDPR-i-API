@@ -19,15 +19,11 @@ public class WesselWestSideContext : IdentityDbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<BenaderOptie>().HasData(new BenaderOptie { Id = "1", Type = "Website" }, new BenaderOptie { Id = "2", Type = "Bellen" }, new BenaderOptie { Id = "3", Type = "Email" });
-        modelBuilder.Entity<BeperkingOptie>().HasData(new BeperkingOptie { Id = "1", Beperking = "Slechtzien" }, new BeperkingOptie { Id = "2", Beperking = "Doof" }, new BeperkingOptie { Id = "3", Beperking = "Verlamt" });
-        modelBuilder.Entity<Hulpmiddelen>().HasData(new Hulpmiddelen { Id = "1", Middel = "Screen reader" });
+        modelBuilder.Entity<BenaderOptie>().HasData(new BenaderOptie { Type = "Website" }, new BenaderOptie { Type = "Bellen" }, new BenaderOptie { Type = "Email" });
+        modelBuilder.Entity<BeperkingOptie>().HasData(new BeperkingOptie { Beperking = "Slechtzien" }, new BeperkingOptie { Beperking = "Doof" }, new BeperkingOptie { Beperking = "Verlamt" });
+        modelBuilder.Entity<Hulpmiddelen>().HasData(new Hulpmiddelen { Middel = "Screen reader" }, new Hulpmiddelen { Middel = "Blinde geleide hond" }, new Hulpmiddelen { Middel = "Tolk" });
 
     }
-
-    public DbSet<Benadering> Benadering { get; set; } = default!;
-
-    public DbSet<Beperking> Beperking { get; set; } = default!;
 
     public DbSet<BenaderOptie> BenaderOptie { get; set; } = default!;
 
@@ -42,8 +38,6 @@ public class WesselWestSideContext : IdentityDbContext
     public DbSet<Hulpmiddel> Hulpmiddel { get; set; } = default!;
 
     public DbSet<Hulpmiddelen> Hulpmiddelen { get; set; } = default!;
-
-    public DbSet<TypeCategorie> TypeCategorie { get; set; } = default!;
 
     public DbSet<Voogd> Voogd { get; set; } = default!;
 

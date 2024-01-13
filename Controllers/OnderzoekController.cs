@@ -24,10 +24,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
         {
-            if (_context.Onderzoek == null)
-            {
-                return NotFound();
-            }
+          if (_context.Onderzoek == null)
+          {
+              return NotFound();
+          }
             return await _context.Onderzoek.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Onderzoek>> GetOnderzoek(string id)
         {
-            if (_context.Onderzoek == null)
-            {
-                return NotFound();
-            }
+          if (_context.Onderzoek == null)
+          {
+              return NotFound();
+          }
             var onderzoek = await _context.Onderzoek.FindAsync(id);
 
             if (onderzoek == null)
@@ -85,12 +85,26 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Onderzoek>> PostOnderzoek(Onderzoek onderzoek)
         {
-            if (_context.Onderzoek == null)
-            {
-                return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
-            }
+          if (_context.Onderzoek == null)
+          {
+              return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
+          }
             _context.Onderzoek.Add(onderzoek);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (OnderzoekExists(onderzoek.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
         }

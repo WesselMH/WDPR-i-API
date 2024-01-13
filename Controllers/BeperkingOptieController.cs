@@ -90,7 +90,21 @@ namespace WDPR_i_API.Controllers
               return Problem("Entity set 'WesselWestSideContext.BeperkingOptie'  is null.");
           }
             _context.BeperkingOptie.Add(beperkingOptie);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (BeperkingOptieExists(beperkingOptie.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetBeperkingOptie", new { id = beperkingOptie.Id }, beperkingOptie);
         }

@@ -24,10 +24,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BenaderOptie>>> GetBenaderOptie()
         {
-            if (_context.BenaderOptie == null)
-            {
-                return NotFound();
-            }
+          if (_context.BenaderOptie == null)
+          {
+              return NotFound();
+          }
             return await _context.BenaderOptie.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BenaderOptie>> GetBenaderOptie(string id)
         {
-            if (_context.BenaderOptie == null)
-            {
-                return NotFound();
-            }
+          if (_context.BenaderOptie == null)
+          {
+              return NotFound();
+          }
             var benaderOptie = await _context.BenaderOptie.FindAsync(id);
 
             if (benaderOptie == null)
@@ -85,12 +85,26 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<BenaderOptie>> PostBenaderOptie(BenaderOptie benaderOptie)
         {
-            if (_context.BenaderOptie == null)
-            {
-                return Problem("Entity set 'WesselWestSideContext.BenaderOptie'  is null.");
-            }
+          if (_context.BenaderOptie == null)
+          {
+              return Problem("Entity set 'WesselWestSideContext.BenaderOptie'  is null.");
+          }
             _context.BenaderOptie.Add(benaderOptie);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (BenaderOptieExists(benaderOptie.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetBenaderOptie", new { id = benaderOptie.Id }, benaderOptie);
         }

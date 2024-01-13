@@ -4,7 +4,7 @@ namespace Onderzoeken;
 
 public class Onderzoek
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
     public string Titel { get; set; }
     public string Beschrijving { get; set; }
     public string Locatie { get; set; }
@@ -13,8 +13,6 @@ public class Onderzoek
     public DateTime Datum { get; set; }
     public Bedrijf Uitvoerder { get; set; }
     public Categorie SoortOnderzoek { get; set; }
-    public SelectieCriterium SelectieCriterium { get; set; }
-
-
-
+    public List<SelectieCriterium>? SelectieCriterium { get; set; }
+    public List<ErvaringsDeskundige>? ErvaringsDeskundigen { get; set; }
 }

@@ -24,10 +24,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Categorie>>> GetCategorie()
         {
-            if (_context.Categorie == null)
-            {
-                return NotFound();
-            }
+          if (_context.Categorie == null)
+          {
+              return NotFound();
+          }
             return await _context.Categorie.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Categorie>> GetCategorie(string id)
         {
-            if (_context.Categorie == null)
-            {
-                return NotFound();
-            }
+          if (_context.Categorie == null)
+          {
+              return NotFound();
+          }
             var categorie = await _context.Categorie.FindAsync(id);
 
             if (categorie == null)
@@ -85,12 +85,26 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Categorie>> PostCategorie(Categorie categorie)
         {
-            if (_context.Categorie == null)
-            {
-                return Problem("Entity set 'WesselWestSideContext.Categorie'  is null.");
-            }
+          if (_context.Categorie == null)
+          {
+              return Problem("Entity set 'WesselWestSideContext.Categorie'  is null.");
+          }
             _context.Categorie.Add(categorie);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (CategorieExists(categorie.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetCategorie", new { id = categorie.Id }, categorie);
         }
