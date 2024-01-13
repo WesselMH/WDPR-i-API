@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Chat>>> GetChat()
         {
-          if (_context.Chat == null)
-          {
-              return NotFound();
-          }
+            if (_context.Chat == null)
+            {
+                return NotFound();
+            }
             return await _context.Chat.ToListAsync();
         }
 
         // GET: api/Chat/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Chat>> GetChat(int id)
+        public async Task<ActionResult<Chat>> GetChat(string id)
         {
-          if (_context.Chat == null)
-          {
-              return NotFound();
-          }
+            if (_context.Chat == null)
+            {
+                return NotFound();
+            }
             var chat = await _context.Chat.FindAsync(id);
 
             if (chat == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Chat/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutChat(int id, Chat chat)
+        public async Task<IActionResult> PutChat(string id, Chat chat)
         {
             if (id != chat.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Chat>> PostChat(Chat chat)
         {
-          if (_context.Chat == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Chat'  is null.");
-          }
+            if (_context.Chat == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Chat'  is null.");
+            }
             _context.Chat.Add(chat);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Chat/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteChat(int id)
+        public async Task<IActionResult> DeleteChat(string id)
         {
             if (_context.Chat == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool ChatExists(int id)
+        private bool ChatExists(string id)
         {
             return (_context.Chat?.Any(e => e.Id == id)).GetValueOrDefault();
         }

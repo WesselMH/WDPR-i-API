@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Beheerder>>> GetBeheerder()
         {
-          if (_context.Beheerder == null)
-          {
-              return NotFound();
-          }
+            if (_context.Beheerder == null)
+            {
+                return NotFound();
+            }
             return await _context.Beheerder.ToListAsync();
         }
 
         // GET: api/Beheerder/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Beheerder>> GetBeheerder(int id)
+        public async Task<ActionResult<Beheerder>> GetBeheerder(string id)
         {
-          if (_context.Beheerder == null)
-          {
-              return NotFound();
-          }
+            if (_context.Beheerder == null)
+            {
+                return NotFound();
+            }
             var beheerder = await _context.Beheerder.FindAsync(id);
 
             if (beheerder == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Beheerder/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBeheerder(int id, Beheerder beheerder)
+        public async Task<IActionResult> PutBeheerder(string id, Beheerder beheerder)
         {
             if (id != beheerder.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Beheerder>> PostBeheerder(Beheerder beheerder)
         {
-          if (_context.Beheerder == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Beheerder'  is null.");
-          }
+            if (_context.Beheerder == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Beheerder'  is null.");
+            }
             _context.Beheerder.Add(beheerder);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Beheerder/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBeheerder(int id)
+        public async Task<IActionResult> DeleteBeheerder(string id)
         {
             if (_context.Beheerder == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BeheerderExists(int id)
+        private bool BeheerderExists(string id)
         {
             return (_context.Beheerder?.Any(e => e.Id == id)).GetValueOrDefault();
         }

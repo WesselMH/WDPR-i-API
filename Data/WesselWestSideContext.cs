@@ -19,9 +19,9 @@ public class WesselWestSideContext : IdentityDbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<BenaderOptie>().HasData(new BenaderOptie { Id = 1, Type = "Website" }, new BenaderOptie { Id = 2, Type = "Bellen" }, new BenaderOptie { Id = 3, Type = "Email" });
-        modelBuilder.Entity<BeperkingOptie>().HasData(new BeperkingOptie { Id = 1, Beperking = "Slechtzien" }, new BeperkingOptie { Id = 2, Beperking = "Doof" }, new BeperkingOptie { Id = 3, Beperking = "Verlamt" });
-        modelBuilder.Entity<Hulpmiddelen>().HasData(new Hulpmiddelen { Id = 1, Middel = "Screen reader" });
+        modelBuilder.Entity<BenaderOptie>().HasData(new BenaderOptie { Id = "1", Type = "Website" }, new BenaderOptie { Id = "2", Type = "Bellen" }, new BenaderOptie { Id = "3", Type = "Email" });
+        modelBuilder.Entity<BeperkingOptie>().HasData(new BeperkingOptie { Id = "1", Beperking = "Slechtzien" }, new BeperkingOptie { Id = "2", Beperking = "Doof" }, new BeperkingOptie { Id = "3", Beperking = "Verlamt" });
+        modelBuilder.Entity<Hulpmiddelen>().HasData(new Hulpmiddelen { Id = "1", Middel = "Screen reader" });
 
     }
 

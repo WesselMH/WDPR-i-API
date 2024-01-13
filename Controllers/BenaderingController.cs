@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Benadering>>> GetBenadering()
         {
-          if (_context.Benadering == null)
-          {
-              return NotFound();
-          }
+            if (_context.Benadering == null)
+            {
+                return NotFound();
+            }
             return await _context.Benadering.ToListAsync();
         }
 
         // GET: api/Benadering/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Benadering>> GetBenadering(int id)
+        public async Task<ActionResult<Benadering>> GetBenadering(string id)
         {
-          if (_context.Benadering == null)
-          {
-              return NotFound();
-          }
+            if (_context.Benadering == null)
+            {
+                return NotFound();
+            }
             var benadering = await _context.Benadering.FindAsync(id);
 
             if (benadering == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Benadering/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBenadering(int id, Benadering benadering)
+        public async Task<IActionResult> PutBenadering(string id, Benadering benadering)
         {
             if (id != benadering.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Benadering>> PostBenadering(Benadering benadering)
         {
-          if (_context.Benadering == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Benadering'  is null.");
-          }
+            if (_context.Benadering == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Benadering'  is null.");
+            }
             _context.Benadering.Add(benadering);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Benadering/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBenadering(int id)
+        public async Task<IActionResult> DeleteBenadering(string id)
         {
             if (_context.Benadering == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BenaderingExists(int id)
+        private bool BenaderingExists(string id)
         {
             return (_context.Benadering?.Any(e => e.Id == id)).GetValueOrDefault();
         }

@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Email>>> GetEmail()
         {
-          if (_context.Email == null)
-          {
-              return NotFound();
-          }
+            if (_context.Email == null)
+            {
+                return NotFound();
+            }
             return await _context.Email.ToListAsync();
         }
 
         // GET: api/Email/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Email>> GetEmail(int id)
+        public async Task<ActionResult<Email>> GetEmail(string id)
         {
-          if (_context.Email == null)
-          {
-              return NotFound();
-          }
+            if (_context.Email == null)
+            {
+                return NotFound();
+            }
             var email = await _context.Email.FindAsync(id);
 
             if (email == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Email/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmail(int id, Email email)
+        public async Task<IActionResult> PutEmail(string id, Email email)
         {
             if (id != email.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Email>> PostEmail(Email email)
         {
-          if (_context.Email == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Email'  is null.");
-          }
+            if (_context.Email == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Email'  is null.");
+            }
             _context.Email.Add(email);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Email/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmail(int id)
+        public async Task<IActionResult> DeleteEmail(string id)
         {
             if (_context.Email == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool EmailExists(int id)
+        private bool EmailExists(string id)
         {
             return (_context.Email?.Any(e => e.Id == id)).GetValueOrDefault();
         }

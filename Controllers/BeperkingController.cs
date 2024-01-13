@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Beperking>>> GetBeperking()
         {
-          if (_context.Beperking == null)
-          {
-              return NotFound();
-          }
+            if (_context.Beperking == null)
+            {
+                return NotFound();
+            }
             return await _context.Beperking.ToListAsync();
         }
 
         // GET: api/Beperking/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Beperking>> GetBeperking(int id)
+        public async Task<ActionResult<Beperking>> GetBeperking(string id)
         {
-          if (_context.Beperking == null)
-          {
-              return NotFound();
-          }
+            if (_context.Beperking == null)
+            {
+                return NotFound();
+            }
             var beperking = await _context.Beperking.FindAsync(id);
 
             if (beperking == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Beperking/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBeperking(int id, Beperking beperking)
+        public async Task<IActionResult> PutBeperking(string id, Beperking beperking)
         {
             if (id != beperking.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Beperking>> PostBeperking(Beperking beperking)
         {
-          if (_context.Beperking == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Beperking'  is null.");
-          }
+            if (_context.Beperking == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Beperking'  is null.");
+            }
             _context.Beperking.Add(beperking);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Beperking/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBeperking(int id)
+        public async Task<IActionResult> DeleteBeperking(string id)
         {
             if (_context.Beperking == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BeperkingExists(int id)
+        private bool BeperkingExists(string id)
         {
             return (_context.Beperking?.Any(e => e.Id == id)).GetValueOrDefault();
         }

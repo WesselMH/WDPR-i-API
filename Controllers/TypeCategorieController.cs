@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TypeCategorie>>> GetTypeCategorie()
         {
-          if (_context.TypeCategorie == null)
-          {
-              return NotFound();
-          }
+            if (_context.TypeCategorie == null)
+            {
+                return NotFound();
+            }
             return await _context.TypeCategorie.ToListAsync();
         }
 
         // GET: api/TypeCategorie/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TypeCategorie>> GetTypeCategorie(int id)
+        public async Task<ActionResult<TypeCategorie>> GetTypeCategorie(string id)
         {
-          if (_context.TypeCategorie == null)
-          {
-              return NotFound();
-          }
+            if (_context.TypeCategorie == null)
+            {
+                return NotFound();
+            }
             var typeCategorie = await _context.TypeCategorie.FindAsync(id);
 
             if (typeCategorie == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/TypeCategorie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTypeCategorie(int id, TypeCategorie typeCategorie)
+        public async Task<IActionResult> PutTypeCategorie(string id, TypeCategorie typeCategorie)
         {
             if (id != typeCategorie.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<TypeCategorie>> PostTypeCategorie(TypeCategorie typeCategorie)
         {
-          if (_context.TypeCategorie == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.TypeCategorie'  is null.");
-          }
+            if (_context.TypeCategorie == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.TypeCategorie'  is null.");
+            }
             _context.TypeCategorie.Add(typeCategorie);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/TypeCategorie/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTypeCategorie(int id)
+        public async Task<IActionResult> DeleteTypeCategorie(string id)
         {
             if (_context.TypeCategorie == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool TypeCategorieExists(int id)
+        private bool TypeCategorieExists(string id)
         {
             return (_context.TypeCategorie?.Any(e => e.Id == id)).GetValueOrDefault();
         }

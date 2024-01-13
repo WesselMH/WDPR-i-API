@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SelectieCriterium>>> GetSelectieCriterium()
         {
-          if (_context.SelectieCriterium == null)
-          {
-              return NotFound();
-          }
+            if (_context.SelectieCriterium == null)
+            {
+                return NotFound();
+            }
             return await _context.SelectieCriterium.ToListAsync();
         }
 
         // GET: api/SelectieCriterium/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SelectieCriterium>> GetSelectieCriterium(int id)
+        public async Task<ActionResult<SelectieCriterium>> GetSelectieCriterium(string id)
         {
-          if (_context.SelectieCriterium == null)
-          {
-              return NotFound();
-          }
+            if (_context.SelectieCriterium == null)
+            {
+                return NotFound();
+            }
             var selectieCriterium = await _context.SelectieCriterium.FindAsync(id);
 
             if (selectieCriterium == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/SelectieCriterium/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSelectieCriterium(int id, SelectieCriterium selectieCriterium)
+        public async Task<IActionResult> PutSelectieCriterium(string id, SelectieCriterium selectieCriterium)
         {
             if (id != selectieCriterium.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<SelectieCriterium>> PostSelectieCriterium(SelectieCriterium selectieCriterium)
         {
-          if (_context.SelectieCriterium == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.SelectieCriterium'  is null.");
-          }
+            if (_context.SelectieCriterium == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.SelectieCriterium'  is null.");
+            }
             _context.SelectieCriterium.Add(selectieCriterium);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/SelectieCriterium/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSelectieCriterium(int id)
+        public async Task<IActionResult> DeleteSelectieCriterium(string id)
         {
             if (_context.SelectieCriterium == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool SelectieCriteriumExists(int id)
+        private bool SelectieCriteriumExists(string id)
         {
             return (_context.SelectieCriterium?.Any(e => e.Id == id)).GetValueOrDefault();
         }

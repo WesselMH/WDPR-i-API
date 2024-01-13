@@ -123,16 +123,7 @@ namespace WDPR_i_API.Controllers
         ///  "achternaam": "string",
         ///  "geboorteDatum": "2023-12-30",
         ///  "postCode": "string",
-        ///  "telefoonNummer": "string",
-        ///  "voogd": {
-        ///    "id": 0,
-        ///    "voornaam": "string",
-        ///    "achternaam": "string",
-        ///    "geboorteDatum": "2023-12-30",
-        ///    "email": "string",
-        ///    "telefoonNummer": "string",
-        ///    "postCode": "string"
-        ///  }
+        ///  "telefoonNummer": "string"
         /// }
         /// </param>
         /// <returns></returns>
@@ -155,28 +146,18 @@ namespace WDPR_i_API.Controllers
         ///  "gebruikersNaam": "string",
         ///  "emailGoogle": "string",
         ///  "sub": "string",
-        ///   "ervaringsDeskundige":
-        ///  {
-        ///   "id": 0,
-        ///   "userName": "string",
-        ///   "gebruikersNaam": "string",
-        ///   "wachtwoord": "string",
-        ///   "emailAccounts": "string",
-        ///   "voornaam": "string",
-        ///   "achternaam": "string",
-        ///   "geboorteDatum": "2023-12-30T19:34:08.167Z",
-        ///   "postCode": "string",
-        ///   "telefoonNummer": "string",
-        ///   "voogd": {
-        ///     "id": 0,
-        ///     "voornaam": "string",
-        ///     "achternaam": "string",
-        ///     "geboorteDatum": "2023-12-30",
-        ///     "email": "string",
-        ///     "telefoonNummer": "string",
-        ///     "postCode": "string"
+        ///  "ervaringsDeskundige": {
+        ///    "id": 0,
+        ///    "userName": "string",
+        ///    "gebruikersNaam": "string",
+        ///    "wachtwoord": "string",
+        ///    "emailAccounts": "string",
+        ///    "voornaam": "string",
+        ///    "achternaam": "string",
+        ///    "geboorteDatum": "2023-12-30T19:34:08.167Z",
+        ///    "postCode": "string",
+        ///    "telefoonNummer": "string"
         ///   }
-        ///  }
         /// }
         /// </param>
         /// <returns></returns>

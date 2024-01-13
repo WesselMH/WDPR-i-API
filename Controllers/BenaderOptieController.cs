@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BenaderOptie>>> GetBenaderOptie()
         {
-          if (_context.BenaderOptie == null)
-          {
-              return NotFound();
-          }
+            if (_context.BenaderOptie == null)
+            {
+                return NotFound();
+            }
             return await _context.BenaderOptie.ToListAsync();
         }
 
         // GET: api/BenaderOptie/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BenaderOptie>> GetBenaderOptie(int id)
+        public async Task<ActionResult<BenaderOptie>> GetBenaderOptie(string id)
         {
-          if (_context.BenaderOptie == null)
-          {
-              return NotFound();
-          }
+            if (_context.BenaderOptie == null)
+            {
+                return NotFound();
+            }
             var benaderOptie = await _context.BenaderOptie.FindAsync(id);
 
             if (benaderOptie == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/BenaderOptie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBenaderOptie(int id, BenaderOptie benaderOptie)
+        public async Task<IActionResult> PutBenaderOptie(string id, BenaderOptie benaderOptie)
         {
             if (id != benaderOptie.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<BenaderOptie>> PostBenaderOptie(BenaderOptie benaderOptie)
         {
-          if (_context.BenaderOptie == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.BenaderOptie'  is null.");
-          }
+            if (_context.BenaderOptie == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.BenaderOptie'  is null.");
+            }
             _context.BenaderOptie.Add(benaderOptie);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/BenaderOptie/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBenaderOptie(int id)
+        public async Task<IActionResult> DeleteBenaderOptie(string id)
         {
             if (_context.BenaderOptie == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BenaderOptieExists(int id)
+        private bool BenaderOptieExists(string id)
         {
             return (_context.BenaderOptie?.Any(e => e.Id == id)).GetValueOrDefault();
         }

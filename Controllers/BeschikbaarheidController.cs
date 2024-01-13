@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Beschikbaarheid>>> GetBeschikbaarheid()
         {
-          if (_context.Beschikbaarheid == null)
-          {
-              return NotFound();
-          }
+            if (_context.Beschikbaarheid == null)
+            {
+                return NotFound();
+            }
             return await _context.Beschikbaarheid.ToListAsync();
         }
 
         // GET: api/Beschikbaarheid/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Beschikbaarheid>> GetBeschikbaarheid(int id)
+        public async Task<ActionResult<Beschikbaarheid>> GetBeschikbaarheid(string id)
         {
-          if (_context.Beschikbaarheid == null)
-          {
-              return NotFound();
-          }
+            if (_context.Beschikbaarheid == null)
+            {
+                return NotFound();
+            }
             var beschikbaarheid = await _context.Beschikbaarheid.FindAsync(id);
 
             if (beschikbaarheid == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Beschikbaarheid/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBeschikbaarheid(int id, Beschikbaarheid beschikbaarheid)
+        public async Task<IActionResult> PutBeschikbaarheid(string id, Beschikbaarheid beschikbaarheid)
         {
             if (id != beschikbaarheid.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Beschikbaarheid>> PostBeschikbaarheid(Beschikbaarheid beschikbaarheid)
         {
-          if (_context.Beschikbaarheid == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Beschikbaarheid'  is null.");
-          }
+            if (_context.Beschikbaarheid == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Beschikbaarheid'  is null.");
+            }
             _context.Beschikbaarheid.Add(beschikbaarheid);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Beschikbaarheid/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBeschikbaarheid(int id)
+        public async Task<IActionResult> DeleteBeschikbaarheid(string id)
         {
             if (_context.Beschikbaarheid == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BeschikbaarheidExists(int id)
+        private bool BeschikbaarheidExists(string id)
         {
             return (_context.Beschikbaarheid?.Any(e => e.Id == id)).GetValueOrDefault();
         }
