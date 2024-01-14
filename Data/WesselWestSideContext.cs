@@ -24,20 +24,20 @@ public class WesselWestSideContext : IdentityDbContext
         modelBuilder.Entity<BeperkingOptie>().HasData(new BeperkingOptie { Id = "1", Beperking = "Slechtzien" }, new BeperkingOptie { Id = "2", Beperking = "Doof" }, new BeperkingOptie { Id = "3", Beperking = "Verlamt" });
         modelBuilder.Entity<Hulpmiddelen>().HasData(new Hulpmiddelen { Id = "1", Middel = "Screen reader" }, new Hulpmiddelen { Id = "2", Middel = "Blinde geleide hond" }, new Hulpmiddelen { Id = "3", Middel = "Tolk" });
 
-        modelBuilder.Entity<Beheerder>().HasData(
-            new Beheerder { Id = "", GebruikersNaam = "Admin", UserName = "Admin", Email = "Admin@example.com", Wachtwoord = "Admin1/" },
-            new Beheerder { Id = "", GebruikersNaam = "Beheerder", UserName = "Beheerder", Email = "Beheerder@example.com", Wachtwoord = "Beheerder1/" }
-        // Add more accounts as needed
-        );
+        // modelBuilder.Entity<Beheerder>().HasData(
+        //     new Beheerder { Id = "", GebruikersNaam = "Admin", UserName = "Admin", Email = "Admin@example.com", Wachtwoord = "Admin1/" },
+        //     new Beheerder { Id = "", GebruikersNaam = "Beheerder", UserName = "Beheerder", Email = "Beheerder@example.com", Wachtwoord = "Beheerder1/" }
+        // // Add more accounts as needed
+        // );
 
-        modelBuilder.Entity<Bedrijf>().HasData(
-            new Bedrijf { Id = "", GebruikersNaam = "Bedrijf", UserName = "Bedrijf", Email = "Bedrijf@example.com", Informatie = "Dit is een bedrijf", Locatie = "Bedrijdstraat 1", URL = "google.com", Wachtwoord = "Bedrijf1/" }
-        );
+        // modelBuilder.Entity<Bedrijf>().HasData(
+        //     new Bedrijf { Id = "", GebruikersNaam = "Bedrijf", UserName = "Bedrijf", Email = "Bedrijf@example.com", Informatie = "Dit is een bedrijf", Locatie = "Bedrijdstraat 1", URL = "google.com", Wachtwoord = "Bedrijf1/" }
+        // );
 
-        modelBuilder.Entity<ErvaringsDeskundige>().HasData(
-            new ErvaringsDeskundige { Id = "", UserName = "Gebruiker", GebruikersNaam = "test gebruiker", Wachtwoord = "Gebruiker1/", EmailAccount = "Test@email.com", Voornaam = "Test", Achternaam = "Gebruiker", GeboorteDatum = new DateTime(2000, 6, 10), PostCode = "1234 AB", TelefoonNummer = "0612345678" }
-            // Add more accounts as needed
-        );
+        // modelBuilder.Entity<ErvaringsDeskundige>().HasData(
+        //     new ErvaringsDeskundige { Id = "", UserName = "Gebruiker", GebruikersNaam = "test gebruiker", Wachtwoord = "Gebruiker1/", EmailAccount = "Test@email.com", Voornaam = "Test", Achternaam = "Gebruiker", GeboorteDatum = new DateTime(2000, 6, 10), PostCode = "1234 AB", TelefoonNummer = "0612345678" }
+        //     // Add more accounts as needed
+        // );
 
         // var roleManager = new RoleManager<IdentityRole>(
         //     new RoleStore<IdentityRole>(new WesselWestSideContext(new DbContextOptions<WesselWestSideContext>())),
