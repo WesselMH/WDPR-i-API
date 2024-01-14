@@ -36,7 +36,7 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="beheerder">
         /// {
-        ///  "id": 0,
+        ///  "id": "",
         ///  "userName": "string",
         ///  "gebruikersNaam": "string",
         ///  "wachtwoord": "string",
@@ -87,7 +87,7 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="bedrijf">
         /// {
-        ///  "id": 0,
+        ///  "id": "",
         ///  "userName": "string",
         ///  "gebruikersNaam": "string",
         ///  "wachtwoord": "string",
@@ -114,7 +114,7 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="ervaringsDeskundige">
         /// {
-        ///  "id": 0,
+        ///  "id": "",
         ///  "userName": "string",
         ///  "gebruikersNaam": "string",
         ///  "wachtwoord": "string",
@@ -142,19 +142,19 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="googleGebruiker">
         /// {
-        ///  "id": 0,
+        ///  "id": "",
         ///  "gebruikersNaam": "string",
         ///  "emailGoogle": "string",
         ///  "sub": "string",
         ///  "ervaringsDeskundige": {
-        ///    "id": 0,
+        ///    "id": "",
         ///    "userName": "string",
         ///    "gebruikersNaam": "string",
         ///    "wachtwoord": "string",
         ///    "emailAccounts": "string",
         ///    "voornaam": "string",
         ///    "achternaam": "string",
-        ///    "geboorteDatum": "2023-12-30T19:34:08.167Z",
+        ///    "geboorteDatum": "2023-12-30",
         ///    "postCode": "string",
         ///    "telefoonNummer": "string"
         ///   }
@@ -177,7 +177,7 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="account">
         /// {
-        ///   "id": 0,
+        ///   "id": "",
         ///   "userName": "string",
         ///   "gebruikersNaam": "string",
         ///   "wachtwoord": "string"
