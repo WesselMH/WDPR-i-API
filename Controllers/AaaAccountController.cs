@@ -187,7 +187,7 @@ namespace WDPR_i_API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginTest([FromBody] Account account)
         {
-            var _user = await _userManager.FindByNameAsync(account.GebruikersNaam);
+            var _user = await _userManager.FindByNameAsync(account.UserName);
             if (_user != null)
             {
                 // Console.WriteLine("test");
