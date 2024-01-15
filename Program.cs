@@ -117,7 +117,6 @@ builder.Services.AddCors(options =>
 
 // builder.Services.AddProblemDetails();
 
-
 var app = builder.Build();
 
 // app.UseExceptionHandler();

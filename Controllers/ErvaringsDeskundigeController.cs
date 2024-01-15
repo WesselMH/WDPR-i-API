@@ -6,11 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Accounts;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WDPR_i_API.Controllers
 {
-    [Authorize(Roles = "beheerder")]
     [Route("api/[controller]")]
     [ApiController]
     public class ErvaringsDeskundigeController : ControllerBase
@@ -35,7 +33,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/ErvaringsDeskundige/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ErvaringsDeskundige>> GetErvaringsDeskundige(int id)
+        public async Task<ActionResult<ErvaringsDeskundige>> GetErvaringsDeskundige(string id)
         {
           if (_context.ErvaringsDeskundige == null)
           {
@@ -54,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/ErvaringsDeskundige/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutErvaringsDeskundige(int id, ErvaringsDeskundige ervaringsDeskundige)
+        public async Task<IActionResult> PutErvaringsDeskundige(string id, ErvaringsDeskundige ervaringsDeskundige)
         {
             if (id != ervaringsDeskundige.Id)
             {
@@ -92,14 +90,28 @@ namespace WDPR_i_API.Controllers
               return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
           }
             _context.ErvaringsDeskundige.Add(ervaringsDeskundige);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (ErvaringsDeskundigeExists(ervaringsDeskundige.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetErvaringsDeskundige", new { id = ervaringsDeskundige.Id }, ervaringsDeskundige);
         }
 
         // DELETE: api/ErvaringsDeskundige/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteErvaringsDeskundige(int id)
+        public async Task<IActionResult> DeleteErvaringsDeskundige(string id)
         {
             if (_context.ErvaringsDeskundige == null)
             {
@@ -117,7 +129,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool ErvaringsDeskundigeExists(int id)
+        private bool ErvaringsDeskundigeExists(string id)
         {
             return (_context.ErvaringsDeskundige?.Any(e => e.Id == id)).GetValueOrDefault();
         }

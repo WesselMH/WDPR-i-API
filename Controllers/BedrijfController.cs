@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bedrijf>>> GetBedrijf()
         {
-          if (_context.Bedrijf == null)
-          {
-              return NotFound();
-          }
+            if (_context.Bedrijf == null)
+            {
+                return NotFound();
+            }
             return await _context.Bedrijf.ToListAsync();
         }
 
         // GET: api/Bedrijf/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Bedrijf>> GetBedrijf(int id)
+        public async Task<ActionResult<Bedrijf>> GetBedrijf(string id)
         {
-          if (_context.Bedrijf == null)
-          {
-              return NotFound();
-          }
+            if (_context.Bedrijf == null)
+            {
+                return NotFound();
+            }
             var bedrijf = await _context.Bedrijf.FindAsync(id);
 
             if (bedrijf == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Bedrijf/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBedrijf(int id, Bedrijf bedrijf)
+        public async Task<IActionResult> PutBedrijf(string id, Bedrijf bedrijf)
         {
             if (id != bedrijf.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Bedrijf>> PostBedrijf(Bedrijf bedrijf)
         {
-          if (_context.Bedrijf == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Bedrijf'  is null.");
-          }
+            if (_context.Bedrijf == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Bedrijf'  is null.");
+            }
             _context.Bedrijf.Add(bedrijf);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Bedrijf/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBedrijf(int id)
+        public async Task<IActionResult> DeleteBedrijf(string id)
         {
             if (_context.Bedrijf == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BedrijfExists(int id)
+        private bool BedrijfExists(string id)
         {
             return (_context.Bedrijf?.Any(e => e.Id == id)).GetValueOrDefault();
         }

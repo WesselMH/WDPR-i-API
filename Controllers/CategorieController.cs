@@ -33,7 +33,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/Categorie/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Categorie>> GetCategorie(int id)
+        public async Task<ActionResult<Categorie>> GetCategorie(string id)
         {
           if (_context.Categorie == null)
           {
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Categorie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategorie(int id, Categorie categorie)
+        public async Task<IActionResult> PutCategorie(string id, Categorie categorie)
         {
             if (id != categorie.Id)
             {
@@ -90,14 +90,28 @@ namespace WDPR_i_API.Controllers
               return Problem("Entity set 'WesselWestSideContext.Categorie'  is null.");
           }
             _context.Categorie.Add(categorie);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (CategorieExists(categorie.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetCategorie", new { id = categorie.Id }, categorie);
         }
 
         // DELETE: api/Categorie/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategorie(int id)
+        public async Task<IActionResult> DeleteCategorie(string id)
         {
             if (_context.Categorie == null)
             {
@@ -115,7 +129,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool CategorieExists(int id)
+        private bool CategorieExists(string id)
         {
             return (_context.Categorie?.Any(e => e.Id == id)).GetValueOrDefault();
         }

@@ -33,7 +33,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/BeperkingOptie/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BeperkingOptie>> GetBeperkingOptie(int id)
+        public async Task<ActionResult<BeperkingOptie>> GetBeperkingOptie(string id)
         {
           if (_context.BeperkingOptie == null)
           {
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/BeperkingOptie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBeperkingOptie(int id, BeperkingOptie beperkingOptie)
+        public async Task<IActionResult> PutBeperkingOptie(string id, BeperkingOptie beperkingOptie)
         {
             if (id != beperkingOptie.Id)
             {
@@ -90,14 +90,28 @@ namespace WDPR_i_API.Controllers
               return Problem("Entity set 'WesselWestSideContext.BeperkingOptie'  is null.");
           }
             _context.BeperkingOptie.Add(beperkingOptie);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (BeperkingOptieExists(beperkingOptie.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetBeperkingOptie", new { id = beperkingOptie.Id }, beperkingOptie);
         }
 
         // DELETE: api/BeperkingOptie/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBeperkingOptie(int id)
+        public async Task<IActionResult> DeleteBeperkingOptie(string id)
         {
             if (_context.BeperkingOptie == null)
             {
@@ -115,7 +129,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BeperkingOptieExists(int id)
+        private bool BeperkingOptieExists(string id)
         {
             return (_context.BeperkingOptie?.Any(e => e.Id == id)).GetValueOrDefault();
         }

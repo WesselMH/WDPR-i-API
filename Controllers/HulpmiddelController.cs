@@ -26,21 +26,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hulpmiddel>>> GetHulpmiddel()
         {
-          if (_context.Hulpmiddel == null)
-          {
-              return NotFound();
-          }
+            if (_context.Hulpmiddel == null)
+            {
+                return NotFound();
+            }
             return await _context.Hulpmiddel.ToListAsync();
         }
 
         // GET: api/Hulpmiddel/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hulpmiddel>> GetHulpmiddel(int id)
+        public async Task<ActionResult<Hulpmiddel>> GetHulpmiddel(string id)
         {
-          if (_context.Hulpmiddel == null)
-          {
-              return NotFound();
-          }
+            if (_context.Hulpmiddel == null)
+            {
+                return NotFound();
+            }
             var hulpmiddel = await _context.Hulpmiddel.FindAsync(id);
 
             if (hulpmiddel == null)
@@ -55,7 +55,7 @@ namespace WDPR_i_API.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "beheerder")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHulpmiddel(int id, Hulpmiddel hulpmiddel)
+        public async Task<IActionResult> PutHulpmiddel(string id, Hulpmiddel hulpmiddel)
         {
             if (id != hulpmiddel.Id)
             {
@@ -89,10 +89,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Hulpmiddel>> PostHulpmiddel(Hulpmiddel hulpmiddel)
         {
-          if (_context.Hulpmiddel == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Hulpmiddel'  is null.");
-          }
+            if (_context.Hulpmiddel == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Hulpmiddel'  is null.");
+            }
             _context.Hulpmiddel.Add(hulpmiddel);
             await _context.SaveChangesAsync();
 
@@ -102,7 +102,7 @@ namespace WDPR_i_API.Controllers
         // DELETE: api/Hulpmiddel/5
         [Authorize(Roles = "beheerder")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHulpmiddel(int id)
+        public async Task<IActionResult> DeleteHulpmiddel(string id)
         {
             if (_context.Hulpmiddel == null)
             {
@@ -120,7 +120,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool HulpmiddelExists(int id)
+        private bool HulpmiddelExists(string id)
         {
             return (_context.Hulpmiddel?.Any(e => e.Id == id)).GetValueOrDefault();
         }
