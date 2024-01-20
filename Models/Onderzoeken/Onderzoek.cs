@@ -4,7 +4,7 @@ namespace Onderzoeken;
 
 public class Onderzoek
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
     public string Titel { get; set; }
     public string Beschrijving { get; set; }
     public string Locatie { get; set; }

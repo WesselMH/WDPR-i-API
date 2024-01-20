@@ -32,7 +32,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/Hulpmiddelen/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hulpmiddelen>> GetHulpmiddelen(string id)
+        public async Task<ActionResult<Hulpmiddelen>> GetHulpmiddelen(int id)
         {
             if (_context.Hulpmiddelen == null)
             {
@@ -51,7 +51,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Hulpmiddelen/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHulpmiddelen(string id, Hulpmiddelen hulpmiddelen)
+        public async Task<IActionResult> PutHulpmiddelen(int id, Hulpmiddelen hulpmiddelen)
         {
             if (id != hulpmiddelen.Id)
             {
@@ -96,7 +96,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Hulpmiddelen/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHulpmiddelen(string id)
+        public async Task<IActionResult> DeleteHulpmiddelen(int id)
         {
             if (_context.Hulpmiddelen == null)
             {
@@ -114,7 +114,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool HulpmiddelenExists(string id)
+        private bool HulpmiddelenExists(int id)
         {
             return (_context.Hulpmiddelen?.Any(e => e.Id == id)).GetValueOrDefault();
         }

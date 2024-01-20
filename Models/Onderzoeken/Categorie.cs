@@ -4,7 +4,7 @@ namespace Onderzoeken;
 
 public class Categorie
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
     public string Opties { get; set; }
     public List<ErvaringsDeskundige>? ErvaringsDeskundigen { get; set; }
 }

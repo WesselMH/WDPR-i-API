@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Beschikbaarheid/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBeschikbaarheid(string id, Beschikbaarheid beschikbaarheid)
+        public async Task<IActionResult> PutBeschikbaarheid(int id, Beschikbaarheid beschikbaarheid)
         {
             if (id != beschikbaarheid.Id)
             {
@@ -111,7 +111,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Beschikbaarheid/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBeschikbaarheid(string id)
+        public async Task<IActionResult> DeleteBeschikbaarheid(int id)
         {
             if (_context.Beschikbaarheid == null)
             {
@@ -129,7 +129,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BeschikbaarheidExists(string id)
+        private bool BeschikbaarheidExists(int id)
         {
             return (_context.Beschikbaarheid?.Any(e => e.Id == id)).GetValueOrDefault();
         }

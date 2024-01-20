@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Email/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmail(string id, Email email)
+        public async Task<IActionResult> PutEmail(int id, Email email)
         {
             if (id != email.Id)
             {
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Email/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmail(string id)
+        public async Task<IActionResult> DeleteEmail(int id)
         {
             if (_context.Email == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool EmailExists(string id)
+        private bool EmailExists(int id)
         {
             return (_context.Email?.Any(e => e.Id == id)).GetValueOrDefault();
         }

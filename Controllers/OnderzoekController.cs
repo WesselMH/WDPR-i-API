@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Onderzoek/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOnderzoek(string id, Onderzoek onderzoek)
+        public async Task<IActionResult> PutOnderzoek(int id, Onderzoek onderzoek)
         {
             if (id != onderzoek.Id)
             {
@@ -111,7 +111,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Onderzoek/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOnderzoek(string id)
+        public async Task<IActionResult> DeleteOnderzoek(int id)
         {
             if (_context.Onderzoek == null)
             {
@@ -129,7 +129,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool OnderzoekExists(string id)
+        private bool OnderzoekExists(int id)
         {
             return (_context.Onderzoek?.Any(e => e.Id == id)).GetValueOrDefault();
         }
