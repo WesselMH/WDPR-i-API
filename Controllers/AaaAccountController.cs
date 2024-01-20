@@ -36,7 +36,7 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="beheerder">
         /// {
-        ///  "id": 0,
+        ///  "id": "",
         ///  "userName": "string",
         ///  "gebruikersNaam": "string",
         ///  "wachtwoord": "string",
@@ -54,20 +54,20 @@ namespace WDPR_i_API.Controllers
             await _userManager.AddToRoleAsync(beheerder, "beheerder");
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
-        
-        // [HttpPost]
-        // [Route("beheerder/aanmeldenAdmin")]
-        // public async Task<ActionResult<IEnumerable<Beheerder>>> RegistreerBeheerderAdmin([FromBody] Beheerder beheerder)
-        // {
-        //     var resultaat = await _userManager.CreateAsync(beheerder, beheerder.Wachtwoord);
-        //     await _roleManager.CreateAsync(new IdentityRole { Name = "beheerder" });
-        //     await _roleManager.CreateAsync(new IdentityRole { Name = "bedrijf" });
-        //     await _roleManager.CreateAsync(new IdentityRole { Name = "ervaringsDeskundige" });
-        //     await _userManager.AddToRoleAsync(beheerder, "beheerder");
-        //     await _userManager.AddToRoleAsync(beheerder, "bedrijf");
-        //     await _userManager.AddToRoleAsync(beheerder, "ervaringsDeskundige");
-        //     return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
-        // }
+
+        [HttpPost]
+        [Route("beheerder/aanmeldenAdmin")]
+        public async Task<ActionResult<IEnumerable<Beheerder>>> RegistreerBeheerderAdmin([FromBody] Beheerder beheerder)
+        {
+            var resultaat = await _userManager.CreateAsync(beheerder, beheerder.Wachtwoord);
+            await _roleManager.CreateAsync(new IdentityRole { Name = "beheerder" });
+            await _roleManager.CreateAsync(new IdentityRole { Name = "bedrijf" });
+            await _roleManager.CreateAsync(new IdentityRole { Name = "ervaringsDeskundige" });
+            await _userManager.AddToRoleAsync(beheerder, "beheerder");
+            await _userManager.AddToRoleAsync(beheerder, "bedrijf");
+            await _userManager.AddToRoleAsync(beheerder, "ervaringsDeskundige");
+            return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
+        }
 
         // [HttpPost("beheerder/login")]
         // public async Task<IActionResult> LoginBeheerder([FromBody] Beheerder beheerder)
@@ -87,7 +87,7 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="bedrijf">
         /// {
-        ///  "id": 0,
+        ///  "id": "",
         ///  "userName": "string",
         ///  "gebruikersNaam": "string",
         ///  "wachtwoord": "string",
@@ -114,25 +114,16 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="ervaringsDeskundige">
         /// {
-        ///  "id": 0,
+        ///  "id": "",
         ///  "userName": "string",
         ///  "gebruikersNaam": "string",
         ///  "wachtwoord": "string",
         ///  "emailAccounts": "string",
         ///  "voornaam": "string",
         ///  "achternaam": "string",
-        ///  "geboorteDatum": "2023-12-30T19:34:08.167Z",
+        ///  "geboorteDatum": "2023-12-30",
         ///  "postCode": "string",
-        ///  "telefoonNummer": "string",
-        ///  "voogd": {
-        ///    "id": 0,
-        ///    "voornaam": "string",
-        ///    "achternaam": "string",
-        ///    "geboorteDatum": "2023-12-30",
-        ///    "email": "string",
-        ///    "telefoonNummer": "string",
-        ///    "postCode": "string"
-        ///  }
+        ///  "telefoonNummer": "string"
         /// }
         /// </param>
         /// <returns></returns>
@@ -151,32 +142,22 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="googleGebruiker">
         /// {
-        ///  "id": 0,
+        ///  "id": "",
         ///  "gebruikersNaam": "string",
         ///  "emailGoogle": "string",
         ///  "sub": "string",
-        ///   "ervaringsDeskundige":
-        ///  {
-        ///   "id": 0,
-        ///   "userName": "string",
-        ///   "gebruikersNaam": "string",
-        ///   "wachtwoord": "string",
-        ///   "emailAccounts": "string",
-        ///   "voornaam": "string",
-        ///   "achternaam": "string",
-        ///   "geboorteDatum": "2023-12-30T19:34:08.167Z",
-        ///   "postCode": "string",
-        ///   "telefoonNummer": "string",
-        ///   "voogd": {
-        ///     "id": 0,
-        ///     "voornaam": "string",
-        ///     "achternaam": "string",
-        ///     "geboorteDatum": "2023-12-30",
-        ///     "email": "string",
-        ///     "telefoonNummer": "string",
-        ///     "postCode": "string"
+        ///  "ervaringsDeskundige": {
+        ///    "id": "",
+        ///    "userName": "string",
+        ///    "gebruikersNaam": "string",
+        ///    "wachtwoord": "string",
+        ///    "emailAccounts": "string",
+        ///    "voornaam": "string",
+        ///    "achternaam": "string",
+        ///    "geboorteDatum": "2023-12-30",
+        ///    "postCode": "string",
+        ///    "telefoonNummer": "string"
         ///   }
-        ///  }
         /// }
         /// </param>
         /// <returns></returns>
@@ -185,7 +166,7 @@ namespace WDPR_i_API.Controllers
         public async Task<ActionResult<IEnumerable<Google>>> RegistreerGoogle([FromBody] Google googleGebruiker)
         {
             var account = googleGebruiker.ervaringsDeskundige;
-            var resultaat = await _userManager.CreateAsync(account, googleGebruiker.sub);
+            var resultaat = await _userManager.CreateAsync(account, account.Wachtwoord);
             await _roleManager.CreateAsync(new IdentityRole { Name = "ervaringsDeskundige" });
             await _userManager.AddToRoleAsync(account, "ervaringsDeskundige");
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
@@ -196,7 +177,7 @@ namespace WDPR_i_API.Controllers
         /// </summary>
         /// <param name="account">
         /// {
-        ///   "id": 0,
+        ///   "id": "",
         ///   "userName": "string",
         ///   "gebruikersNaam": "string",
         ///   "wachtwoord": "string"
@@ -206,7 +187,7 @@ namespace WDPR_i_API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginTest([FromBody] Account account)
         {
-            var _user = await _userManager.FindByNameAsync(account.GebruikersNaam);
+            var _user = await _userManager.FindByNameAsync(account.UserName);
             if (_user != null)
             {
                 // Console.WriteLine("test");

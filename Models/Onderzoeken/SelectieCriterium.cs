@@ -6,4 +6,5 @@ public class SelectieCriterium
     public string TypeBeperking { get; set; }
     public string PostCode { get; set; }
     public int Leeftijd { get; set; }
+    public List<Onderzoek> Onderzoeken { get; set; }
 }

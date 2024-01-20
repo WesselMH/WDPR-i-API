@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Chat>>> GetChat()
         {
-          if (_context.Chat == null)
-          {
-              return NotFound();
-          }
+            if (_context.Chat == null)
+            {
+                return NotFound();
+            }
             return await _context.Chat.ToListAsync();
         }
 
         // GET: api/Chat/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Chat>> GetChat(int id)
+        public async Task<ActionResult<Chat>> GetChat(string id)
         {
-          if (_context.Chat == null)
-          {
-              return NotFound();
-          }
+            if (_context.Chat == null)
+            {
+                return NotFound();
+            }
             var chat = await _context.Chat.FindAsync(id);
 
             if (chat == null)
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Chat>> PostChat(Chat chat)
         {
-          if (_context.Chat == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Chat'  is null.");
-          }
+            if (_context.Chat == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Chat'  is null.");
+            }
             _context.Chat.Add(chat);
             await _context.SaveChangesAsync();
 

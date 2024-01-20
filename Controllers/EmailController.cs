@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Email>>> GetEmail()
         {
-          if (_context.Email == null)
-          {
-              return NotFound();
-          }
+            if (_context.Email == null)
+            {
+                return NotFound();
+            }
             return await _context.Email.ToListAsync();
         }
 
         // GET: api/Email/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Email>> GetEmail(int id)
+        public async Task<ActionResult<Email>> GetEmail(string id)
         {
-          if (_context.Email == null)
-          {
-              return NotFound();
-          }
+            if (_context.Email == null)
+            {
+                return NotFound();
+            }
             var email = await _context.Email.FindAsync(id);
 
             if (email == null)
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Email>> PostEmail(Email email)
         {
-          if (_context.Email == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Email'  is null.");
-          }
+            if (_context.Email == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Email'  is null.");
+            }
             _context.Email.Add(email);
             await _context.SaveChangesAsync();
 

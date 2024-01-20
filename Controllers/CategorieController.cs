@@ -33,7 +33,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/Categorie/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Categorie>> GetCategorie(int id)
+        public async Task<ActionResult<Categorie>> GetCategorie(string id)
         {
           if (_context.Categorie == null)
           {
@@ -90,7 +90,21 @@ namespace WDPR_i_API.Controllers
               return Problem("Entity set 'WesselWestSideContext.Categorie'  is null.");
           }
             _context.Categorie.Add(categorie);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (CategorieExists(categorie.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetCategorie", new { id = categorie.Id }, categorie);
         }

@@ -26,10 +26,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Hulpmiddel>>> GetHulpmiddel()
         {
-          if (_context.Hulpmiddel == null)
-          {
-              return NotFound();
-          }
+            if (_context.Hulpmiddel == null)
+            {
+                return NotFound();
+            }
             return await _context.Hulpmiddel.ToListAsync();
         }
 
@@ -37,10 +37,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Hulpmiddel>> GetHulpmiddel(int id)
         {
-          if (_context.Hulpmiddel == null)
-          {
-              return NotFound();
-          }
+            if (_context.Hulpmiddel == null)
+            {
+                return NotFound();
+            }
             var hulpmiddel = await _context.Hulpmiddel.FindAsync(id);
 
             if (hulpmiddel == null)
@@ -89,10 +89,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Hulpmiddel>> PostHulpmiddel(Hulpmiddel hulpmiddel)
         {
-          if (_context.Hulpmiddel == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Hulpmiddel'  is null.");
-          }
+            if (_context.Hulpmiddel == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Hulpmiddel'  is null.");
+            }
             _context.Hulpmiddel.Add(hulpmiddel);
             await _context.SaveChangesAsync();
 

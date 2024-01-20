@@ -33,7 +33,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/Onderzoek/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Onderzoek>> GetOnderzoek(int id)
+        public async Task<ActionResult<Onderzoek>> GetOnderzoek(string id)
         {
           if (_context.Onderzoek == null)
           {
@@ -90,7 +90,21 @@ namespace WDPR_i_API.Controllers
               return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
           }
             _context.Onderzoek.Add(onderzoek);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (OnderzoekExists(onderzoek.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
         }

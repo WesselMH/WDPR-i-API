@@ -33,7 +33,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/BeperkingOptie/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BeperkingOptie>> GetBeperkingOptie(int id)
+        public async Task<ActionResult<BeperkingOptie>> GetBeperkingOptie(string id)
         {
           if (_context.BeperkingOptie == null)
           {
@@ -90,7 +90,21 @@ namespace WDPR_i_API.Controllers
               return Problem("Entity set 'WesselWestSideContext.BeperkingOptie'  is null.");
           }
             _context.BeperkingOptie.Add(beperkingOptie);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (BeperkingOptieExists(beperkingOptie.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetBeperkingOptie", new { id = beperkingOptie.Id }, beperkingOptie);
         }

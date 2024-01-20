@@ -24,21 +24,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAccount()
         {
-          if (_context.Account == null)
-          {
-              return NotFound();
-          }
+            if (_context.Account == null)
+            {
+                return NotFound();
+            }
             return await _context.Account.ToListAsync();
         }
 
         // GET: api/Account/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Account>> GetAccount(int id)
+        public async Task<ActionResult<Account>> GetAccount(string id)
         {
-          if (_context.Account == null)
-          {
-              return NotFound();
-          }
+            if (_context.Account == null)
+            {
+                return NotFound();
+            }
             var account = await _context.Account.FindAsync(id);
 
             if (account == null)
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Account/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAccount(int id, Account account)
+        public async Task<IActionResult> PutAccount(string id, Account account)
         {
             if (id != account.Id)
             {
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Account>> PostAccount(Account account)
         {
-          if (_context.Account == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Account'  is null.");
-          }
+            if (_context.Account == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Account'  is null.");
+            }
             _context.Account.Add(account);
             await _context.SaveChangesAsync();
 
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Account/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAccount(int id)
+        public async Task<IActionResult> DeleteAccount(string id)
         {
             if (_context.Account == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool AccountExists(int id)
+        private bool AccountExists(string id)
         {
             return (_context.Account?.Any(e => e.Id == id)).GetValueOrDefault();
         }

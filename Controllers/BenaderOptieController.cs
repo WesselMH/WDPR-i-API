@@ -33,7 +33,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/BenaderOptie/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BenaderOptie>> GetBenaderOptie(int id)
+        public async Task<ActionResult<BenaderOptie>> GetBenaderOptie(string id)
         {
           if (_context.BenaderOptie == null)
           {
@@ -90,7 +90,21 @@ namespace WDPR_i_API.Controllers
               return Problem("Entity set 'WesselWestSideContext.BenaderOptie'  is null.");
           }
             _context.BenaderOptie.Add(benaderOptie);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (BenaderOptieExists(benaderOptie.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetBenaderOptie", new { id = benaderOptie.Id }, benaderOptie);
         }

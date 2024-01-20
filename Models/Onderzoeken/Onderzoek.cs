@@ -13,8 +13,6 @@ public class Onderzoek
     public DateTime Datum { get; set; }
     public Bedrijf Uitvoerder { get; set; }
     public Categorie SoortOnderzoek { get; set; }
-    public SelectieCriterium SelectieCriterium { get; set; }
-
-
-
+    public List<SelectieCriterium>? SelectieCriterium { get; set; }
+    public List<ErvaringsDeskundige>? ErvaringsDeskundigen { get; set; }
 }
