@@ -24,10 +24,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ErvaringsDeskundige>>> GetErvaringsDeskundige()
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return NotFound();
-          }
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
             return await _context.ErvaringsDeskundige.ToListAsync();
         }
 
@@ -35,11 +35,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ErvaringsDeskundige>> GetErvaringsDeskundige(string id)
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return NotFound();
-          }
-            var ervaringsDeskundige = await _context.ErvaringsDeskundige.FindAsync(id);
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
+            var ervaringsDeskundige = _context.ErvaringsDeskundige
+            .Include(e => e.Voogd)
+            .Include(e => e.BenaderOpties)
+            .Include(e => e.Onderzoeken)
+            .Include(e => e.Hulpmiddelen)
+            .Include(e => e.Beperkingen)
+            .Include(e => e.TypeOnderzoeken)
+            .Where(e => e.Id == id)
+            .FirstOrDefault();
+
+            // var ervaringsDeskundige2 = _context.ErvaringsDeskundige.Include(e => (e.BenaderOpties)).Include(e => e.Onderzoeken).Include(e => e.Hulpmiddelen).Include(e => e.BenaderOpties).ToList();
 
             if (ervaringsDeskundige == null)
             {
@@ -85,10 +95,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<ErvaringsDeskundige>> PostErvaringsDeskundige(ErvaringsDeskundige ervaringsDeskundige)
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
-          }
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
+            }
             _context.ErvaringsDeskundige.Add(ervaringsDeskundige);
             try
             {

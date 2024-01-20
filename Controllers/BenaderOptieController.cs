@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/BenaderOptie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBenaderOptie(string id, BenaderOptie benaderOptie)
+        public async Task<IActionResult> PutBenaderOptie(int id, BenaderOptie benaderOptie)
         {
             if (id != benaderOptie.Id)
             {
@@ -111,7 +111,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/BenaderOptie/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBenaderOptie(string id)
+        public async Task<IActionResult> DeleteBenaderOptie(int id)
         {
             if (_context.BenaderOptie == null)
             {
@@ -129,7 +129,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BenaderOptieExists(string id)
+        private bool BenaderOptieExists(int id)
         {
             return (_context.BenaderOptie?.Any(e => e.Id == id)).GetValueOrDefault();
         }

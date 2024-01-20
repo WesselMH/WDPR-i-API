@@ -12,10 +12,10 @@ public class ErvaringsDeskundige : Account
     public string TelefoonNummer { get; set; }
     public Voogd? Voogd { get; set; }
 
-    public List<Hulpmiddel>? HulpmiddelenLijst { get; set; }
-    public List<Onderzoek>? OnderzoekenLijst { get; set; }
-    public List<BeperkingOptie>? BeperkingenLijst { get; set; }
-    public List<Categorie>? TypeOnderzoekenLijst { get; set; }
+    public List<Hulpmiddel>? Hulpmiddelen { get; set; }
+    public List<Onderzoek>? Onderzoeken { get; set; }
+    public List<BeperkingOptie>? Beperkingen { get; set; }
+    public List<Categorie>? TypeOnderzoeken { get; set; }
     public List<BenaderOptie>? BenaderOpties { get; set; }
-    public List<Beschikbaarheid>? Beschikbaarheiden { get; set; }
+    public List<Beschikbaarheid>? Beschikbaarheden { get; set; }
 }

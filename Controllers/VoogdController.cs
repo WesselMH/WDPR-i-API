@@ -33,7 +33,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/Voogd/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Voogd>> GetVoogd(string id)
+        public async Task<ActionResult<Voogd>> GetVoogd(int id)
         {
           if (_context.Voogd == null)
           {
@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Voogd/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVoogd(string id, Voogd voogd)
+        public async Task<IActionResult> PutVoogd(int id, Voogd voogd)
         {
             if (id != voogd.Id)
             {
@@ -97,7 +97,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Voogd/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVoogd(string id)
+        public async Task<IActionResult> DeleteVoogd(int id)
         {
             if (_context.Voogd == null)
             {
@@ -115,7 +115,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool VoogdExists(string id)
+        private bool VoogdExists(int id)
         {
             return (_context.Voogd?.Any(e => e.Id == id)).GetValueOrDefault();
         }
