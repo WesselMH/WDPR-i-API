@@ -148,7 +148,7 @@ namespace WDPR_i_API.Controllers
             {
                 if (ErvaringsDeskundigeExists(ervaringsDeskundige.Id))
                 {
-                    return Conflict();
+                    return Conflict("Gebruiker al toegevoegd aan onderzoek");
                 }
                 else
                 {
