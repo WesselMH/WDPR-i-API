@@ -15,4 +15,5 @@ public class Onderzoek
     public Categorie SoortOnderzoek { get; set; }
     public List<SelectieCriterium>? SelectieCriterium { get; set; }
     public List<ErvaringsDeskundige>? ErvaringsDeskundigen { get; set; }
+    public bool CheckedDoorBeheerder { get; set; }
 }
