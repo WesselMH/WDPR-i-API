@@ -23,6 +23,7 @@ public class WesselWestSideContext : IdentityDbContext
         modelBuilder.Entity<BenaderOptie>().HasData(new BenaderOptie { Id = 1, Type = "Website" }, new BenaderOptie { Id = 2, Type = "Bellen" }, new BenaderOptie { Id = 3, Type = "Email" });
         modelBuilder.Entity<BeperkingOptie>().HasData(new BeperkingOptie { Id = 1, Beperking = "Slechtzien" }, new BeperkingOptie { Id = 2, Beperking = "Doof" }, new BeperkingOptie { Id = 3, Beperking = "Verlamt" });
         modelBuilder.Entity<Hulpmiddelen>().HasData(new Hulpmiddelen { Id = 1, Middel = "Screen reader" }, new Hulpmiddelen { Id = 2, Middel = "Blinde geleide hond" }, new Hulpmiddelen { Id = 3, Middel = "Tolk" });
+        modelBuilder.Entity<Categorie>().HasData(new Categorie { Id = 1, Opties = "Vragen lijst" }, new Categorie { Id = 2, Opties = "Online opdracht" }, new Categorie { Id = 3, Opties = "Uitnodiging" });
 
         modelBuilder.Entity<ErvaringsDeskundige>()
                 .HasMany(e => e.Beperkingen)
@@ -39,6 +40,18 @@ public class WesselWestSideContext : IdentityDbContext
         modelBuilder.Entity<ErvaringsDeskundige>()
                 .HasMany(e => e.BenaderOpties)
                 .WithMany(e => e.ErvaringsDeskundigen);
+                
+        modelBuilder.Entity<ErvaringsDeskundige>()
+                .HasMany(e => e.Beschikbaarheden)
+                .WithMany(e => e.ErvaringsDeskundigen);
+                
+        modelBuilder.Entity<Onderzoek>()
+                .HasMany(e => e.SelectieCriterium)
+                .WithMany(e => e.Onderzoeken);
+                
+        modelBuilder.Entity<Onderzoek>()
+                .HasMany(e => e.SelectieCriterium)
+                .WithMany(e => e.Onderzoeken);
 
         // modelBuilder.Entity<Hulpmiddel>()
         //         .Property(b => b.Id)
