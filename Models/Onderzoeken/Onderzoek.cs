@@ -8,10 +8,10 @@ public class Onderzoek
     public string Titel { get; set; }
     public string Beschrijving { get; set; }
     public string Locatie { get; set; }
-    public string Status { get; set; }
+    // public string Status { get; set; }
     public string Beloning { get; set; }
     public DateTime Datum { get; set; }
-    public Bedrijf Uitvoerder { get; set; }
+    public Bedrijf? Uitvoerder { get; set; }
     public Categorie SoortOnderzoek { get; set; }
     public List<SelectieCriterium>? SelectieCriterium { get; set; }
     public List<ErvaringsDeskundige>? ErvaringsDeskundigen { get; set; }
