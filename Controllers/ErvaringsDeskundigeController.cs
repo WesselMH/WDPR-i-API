@@ -20,38 +20,36 @@ namespace WDPR_i_API.Controllers
             _context = context;
         }
 
-        // {
-        //     "id": "string",
-        //     "gebruikersNaam": "string",
-        //     "wachtwoord": "string",
-        //     "emailAccount": "string",
-        //     "voornaam": "string",
-        //     "achternaam": "string",
-        //     "geboorteDatum": "2024-01-16T14:25:22.661Z",
-        //     "postCode": "string",
-        //     "telefoonNummer": "string",
-        // }
-
         // GET: api/ErvaringsDeskundige
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ErvaringsDeskundige>>> GetErvaringsDeskundige()
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return NotFound();
-          }
-            return await _context.ErvaringsDeskundige.Include(x => x.OnderzoekenLijst).ToListAsync();
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
+            return await _context.ErvaringsDeskundige.ToListAsync();
         }
 
         // GET: api/ErvaringsDeskundige/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ErvaringsDeskundige>> GetErvaringsDeskundige(string id)
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return NotFound();
-          }
-            var ervaringsDeskundige = await _context.ErvaringsDeskundige.FindAsync(id);
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
+            var ervaringsDeskundige = _context.ErvaringsDeskundige
+            .Include(e => e.Voogd)
+            .Include(e => e.BenaderOpties)
+            .Include(e => e.Onderzoeken)
+            .Include(e => e.Hulpmiddelen)
+            .Include(e => e.Beperkingen)
+            .Include(e => e.TypeOnderzoeken)
+            .Where(e => e.Id == id)
+            .FirstOrDefault();
+
+            // var ervaringsDeskundige2 = _context.ErvaringsDeskundige.Include(e => (e.BenaderOpties)).Include(e => e.Onderzoeken).Include(e => e.Hulpmiddelen).Include(e => e.BenaderOpties).ToList();
 
             if (ervaringsDeskundige == null)
             {
@@ -97,10 +95,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<ErvaringsDeskundige>> PostErvaringsDeskundige(ErvaringsDeskundige ervaringsDeskundige)
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
-          }
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
+            }
             _context.ErvaringsDeskundige.Add(ervaringsDeskundige);
             try
             {
@@ -118,43 +116,6 @@ namespace WDPR_i_API.Controllers
                 }
             }
 
-            return CreatedAtAction("GetErvaringsDeskundige", new { id = ervaringsDeskundige.Id }, ervaringsDeskundige);
-        }
-
-        [HttpPost("{id}")]
-        [Route("AddOnderzoek/{id}")]
-        public async Task<ActionResult<ErvaringsDeskundige>> PostAddOnderzoek([FromRoute]string id,[FromBody] ErvaringsDeskundige ervaringsDeskundige)
-        {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
-          }
-            string ervaringsDeskundigeId = ervaringsDeskundige.Id;
-            var deskundige = _context.ErvaringsDeskundige.Single((x) => x.Id == ervaringsDeskundigeId);
-            var onderzoek = _context.Onderzoek.Single((x) => x.Id == id);
-            
-            if (deskundige.OnderzoekenLijst == null)
-            {
-                deskundige.OnderzoekenLijst = new List<Onderzoeken.Onderzoek>();
-            }
-            
-            deskundige.OnderzoekenLijst.Add(onderzoek);
-            
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ErvaringsDeskundigeExists(ervaringsDeskundige.Id))
-                {
-                    return Conflict("Gebruiker al toegevoegd aan onderzoek");
-                }
-                else
-                {
-                    throw;
-                }
-            }
             return CreatedAtAction("GetErvaringsDeskundige", new { id = ervaringsDeskundige.Id }, ervaringsDeskundige);
         }
 
@@ -177,35 +138,6 @@ namespace WDPR_i_API.Controllers
 
             return NoContent();
         }
-
-        // [HttpDelete("{id}")]
-        // [Route("DeleteOnderzoek")]
-        // public async Task<IActionResult> DeleteOnderzoek(string id, ErvaringsDeskundige ervaringsDeskundige)
-        // {
-        //     if (_context.ErvaringsDeskundige == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     var deskundige = _context.ErvaringsDeskundige.Single((x) => x.GebruikersNaam == ervaringsDeskundige.GebruikersNaam);
-        //     var onderzoek = _context.Onderzoek.Single((x) => x.Id == id);
-            
-        //     if (deskundige.OnderzoekenLijst == null)
-        //     {
-        //         return NotFound();
-        //     }
-            
-        //     deskundige.OnderzoekenLijst.Remove(onderzoek);
-
-        //     if (ervaringsDeskundige == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     await _context.SaveChangesAsync();
-
-        //     return NoContent();
-        // }
 
         private bool ErvaringsDeskundigeExists(string id)
         {

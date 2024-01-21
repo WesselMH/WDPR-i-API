@@ -20,9 +20,29 @@ public class WesselWestSideContext : IdentityDbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<BenaderOptie>().HasData(new BenaderOptie { Id = "1", Type = "Website" }, new BenaderOptie { Id = "2", Type = "Bellen" }, new BenaderOptie { Id = "3", Type = "Email" });
-        modelBuilder.Entity<BeperkingOptie>().HasData(new BeperkingOptie { Id = "1", Beperking = "Slechtzien" }, new BeperkingOptie { Id = "2", Beperking = "Doof" }, new BeperkingOptie { Id = "3", Beperking = "Verlamt" });
-        modelBuilder.Entity<Hulpmiddelen>().HasData(new Hulpmiddelen { Id = "1", Middel = "Screen reader" }, new Hulpmiddelen { Id = "2", Middel = "Blinde geleide hond" }, new Hulpmiddelen { Id = "3", Middel = "Tolk" });
+        modelBuilder.Entity<BenaderOptie>().HasData(new BenaderOptie { Id = 1, Type = "Website" }, new BenaderOptie { Id = 2, Type = "Bellen" }, new BenaderOptie { Id = 3, Type = "Email" });
+        modelBuilder.Entity<BeperkingOptie>().HasData(new BeperkingOptie { Id = 1, Beperking = "Slechtzien" }, new BeperkingOptie { Id = 2, Beperking = "Doof" }, new BeperkingOptie { Id = 3, Beperking = "Verlamt" });
+        modelBuilder.Entity<Hulpmiddelen>().HasData(new Hulpmiddelen { Id = 1, Middel = "Screen reader" }, new Hulpmiddelen { Id = 2, Middel = "Blinde geleide hond" }, new Hulpmiddelen { Id = 3, Middel = "Tolk" });
+
+        modelBuilder.Entity<ErvaringsDeskundige>()
+                .HasMany(e => e.Beperkingen)
+                .WithMany(e => e.ErvaringsDeskundigen);
+
+        modelBuilder.Entity<ErvaringsDeskundige>()
+                .HasMany(e => e.Onderzoeken)
+                .WithMany(e => e.ErvaringsDeskundigen);
+
+        modelBuilder.Entity<ErvaringsDeskundige>()
+                .HasMany(e => e.TypeOnderzoeken)
+                .WithMany(e => e.ErvaringsDeskundigen);
+
+        modelBuilder.Entity<ErvaringsDeskundige>()
+                .HasMany(e => e.BenaderOpties)
+                .WithMany(e => e.ErvaringsDeskundigen);
+
+        // modelBuilder.Entity<Hulpmiddel>()
+        //         .Property(b => b.Id)
+        //         .ValueGeneratedOnAdd();
 
         // modelBuilder.Entity<Beheerder>().HasData(
         //     new Beheerder { Id = "", GebruikersNaam = "Admin", UserName = "Admin", Email = "Admin@example.com", Wachtwoord = "Admin1/" },

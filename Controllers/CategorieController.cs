@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Categorie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategorie(string id, Categorie categorie)
+        public async Task<IActionResult> PutCategorie(int id, Categorie categorie)
         {
             if (id != categorie.Id)
             {
@@ -111,7 +111,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Categorie/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategorie(string id)
+        public async Task<IActionResult> DeleteCategorie(int id)
         {
             if (_context.Categorie == null)
             {
@@ -129,7 +129,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool CategorieExists(string id)
+        private bool CategorieExists(int id)
         {
             return (_context.Categorie?.Any(e => e.Id == id)).GetValueOrDefault();
         }

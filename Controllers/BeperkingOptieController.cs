@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/BeperkingOptie/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBeperkingOptie(string id, BeperkingOptie beperkingOptie)
+        public async Task<IActionResult> PutBeperkingOptie(int id, BeperkingOptie beperkingOptie)
         {
             if (id != beperkingOptie.Id)
             {
@@ -111,7 +111,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/BeperkingOptie/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBeperkingOptie(string id)
+        public async Task<IActionResult> DeleteBeperkingOptie(int id)
         {
             if (_context.BeperkingOptie == null)
             {
@@ -129,7 +129,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool BeperkingOptieExists(string id)
+        private bool BeperkingOptieExists(int id)
         {
             return (_context.BeperkingOptie?.Any(e => e.Id == id)).GetValueOrDefault();
         }

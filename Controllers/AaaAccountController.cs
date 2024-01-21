@@ -54,7 +54,7 @@ namespace WDPR_i_API.Controllers
             await _userManager.AddToRoleAsync(beheerder, "beheerder");
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
-        
+
         [HttpPost]
         [Route("beheerder/aanmeldenAdmin")]
         public async Task<ActionResult<IEnumerable<Beheerder>>> RegistreerBeheerderAdmin([FromBody] Beheerder beheerder)
