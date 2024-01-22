@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Accounts;
+using Onderzoeken;
+
 
 namespace WDPR_i_API.Controllers
 {
@@ -29,6 +31,24 @@ namespace WDPR_i_API.Controllers
                 return NotFound();
             }
             return await _context.ErvaringsDeskundige.ToListAsync();
+        }
+
+        // GET: api/ErvaringsDeskundige/Onderzoeken
+        [HttpGet]
+        [Route("Onderzoeken")]
+        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetErvaringsDeskundigeOnderzoeken(string id)
+        {
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
+            var getListOnderzoeken = _context.ErvaringsDeskundige.Where(e => e.Id == id)
+            .Include(e => e.Onderzoeken)
+            .SelectMany(e => e.Onderzoeken)
+            .Include(e => e.Uitvoerder)
+            .ToListAsync();
+
+            return await getListOnderzoeken;
         }
 
         // GET: api/ErvaringsDeskundige/5
