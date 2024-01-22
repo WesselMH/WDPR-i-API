@@ -139,6 +139,43 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
+        [HttpPost]
+        [Route("AddOnderzoek/{id}")]
+        public async Task<ActionResult<ErvaringsDeskundige>> PostAddOnderzoek([FromRoute]int id,[FromBody] ErvaringsDeskundige ervaringsDeskundige)
+        {
+          if (_context.ErvaringsDeskundige == null)
+          {
+              return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
+          }
+            string ervaringsDeskundigeId = ervaringsDeskundige.Id;
+            var deskundige = _context.ErvaringsDeskundige.Single((x) => x.Id == ervaringsDeskundigeId);
+            var onderzoek = _context.Onderzoek.Single((x) => x.Id == id);
+            
+            if (deskundige.Onderzoeken == null)
+            {
+                deskundige.Onderzoeken = new List<Onderzoeken.Onderzoek>();
+            }
+            
+            deskundige.Onderzoeken.Add(onderzoek);
+            
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (ErvaringsDeskundigeExists(ervaringsDeskundige.Id))
+                {
+                    return Conflict("Gebruiker al toegevoegd aan onderzoek");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return CreatedAtAction("GetErvaringsDeskundige", new { id = ervaringsDeskundige.Id }, ervaringsDeskundige);
+        }
+
         private bool ErvaringsDeskundigeExists(string id)
         {
             return (_context.ErvaringsDeskundige?.Any(e => e.Id == id)).GetValueOrDefault();

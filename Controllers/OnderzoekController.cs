@@ -20,6 +20,13 @@ namespace WDPR_i_API.Controllers
             _context = context;
         }
 
+        // public static readonly List<Onderzoek> listOnderzoek = new List<Onderzoek>
+        // {
+        //     new Onderzoek{Id=0, Titel="Toegankelijkheid voor Mensen met Beperkingen",Beschrijving="Studie naar Kwaliteit van Leven bij Mensen met Beperkingen: Een diepgaand onderzoek naar de dagelijkse hindernissen en mogelijkheden tot verbetering. Het doel is waardevolle inzichten te vergaren ter bevordering van levenskwaliteit en inclusie voor deze individuen.",Locatie="", Status="true",Beloning="",Uitvoerder=new Accounts.Bedrijf{GebruikersNaam = "Accessibility Foundation"}, Datum = new DateTime(2023,12,12)},
+        //     new Onderzoek{Id=1, Titel="Inclusie en Welzijn bij Mensen met Beperkingen",Beschrijving="Onderzoek naar Levenskwaliteit bij Personen met een Beperking: Een analyse van sociale inclusie en dagelijkse uitdagingen, met het doel bij te dragen aan verbeterde maatschappelijke participatie en welzijn.",Locatie="", Status="true",Beloning="",Uitvoerder=new Accounts.Bedrijf{GebruikersNaam = "Mediamarkt"}, Datum = new DateTime(2023,12,12)},
+        //     new Onderzoek{Id=2, Titel="Toegankelijkheidsbeoordeling 2023",Beschrijving="Deze enquête is ontworpen om inzicht te krijgen in uw ervaringen met de toegankelijkheid van onze producten/diensten/ruimtes. Neem alstublieft de tijd om de vragen eerlijk en gedetailleerd te beantwoorden. Uw input zal direct bijdragen aan het verbeteren van onze inspanningen op het gebied van inclusiviteit.",Locatie="", Status="false",Beloning="",Uitvoerder=new Accounts.Bedrijf{GebruikersNaam = "Bartiméus"}, Datum = new DateTime(2023,12,12)}
+        // };
+
         // GET: api/Onderzoek
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
@@ -28,18 +35,18 @@ namespace WDPR_i_API.Controllers
           {
               return NotFound();
           }
-            return await _context.Onderzoek.ToListAsync();
+            return await _context.Onderzoek.Include(x => x.Uitvoerder).ToListAsync();
         }
 
         // GET: api/Onderzoek/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Onderzoek>> GetOnderzoek(string id)
+        public async Task<ActionResult<Onderzoek>> GetOnderzoek(int id)
         {
           if (_context.Onderzoek == null)
           {
               return NotFound();
           }
-            var onderzoek = await _context.Onderzoek.FindAsync(id);
+            var onderzoek = await _context.Onderzoek.Include(x => x.Uitvoerder).SingleOrDefaultAsync(x => x.Id == id);
 
             if (onderzoek == null)
             {
@@ -89,6 +96,35 @@ namespace WDPR_i_API.Controllers
           {
               return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
           }
+            _context.Onderzoek.Add(onderzoek);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (OnderzoekExists(onderzoek.Id))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
+        }
+
+        [HttpPost]
+        [Route("AddDeskundige")]
+        public async Task<ActionResult<Onderzoek>> PostAddDeskundige(int id, [FromBody]Onderzoek onderzoek)
+        {
+          if (_context.Onderzoek == null)
+          {
+              return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
+          }
+
             _context.Onderzoek.Add(onderzoek);
             try
             {
