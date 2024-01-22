@@ -20,35 +20,12 @@ namespace WDPR_i_API.Controllers
             _context = context;
         }
 
-        public static readonly List<Onderzoek> listOnderzoek = new List<Onderzoek>
-        {
-            new Onderzoek{Id="0", Titel="Toegankelijkheid voor Mensen met Beperkingen",Beschrijving="Studie naar Kwaliteit van Leven bij Mensen met Beperkingen: Een diepgaand onderzoek naar de dagelijkse hindernissen en mogelijkheden tot verbetering. Het doel is waardevolle inzichten te vergaren ter bevordering van levenskwaliteit en inclusie voor deze individuen.",Locatie="", Status="true",Beloning="",Uitvoerder=new Accounts.Bedrijf{GebruikersNaam = "Accessibility Foundation"}, Datum = new DateTime(2023,12,12)},
-            new Onderzoek{Id="1", Titel="Inclusie en Welzijn bij Mensen met Beperkingen",Beschrijving="Onderzoek naar Levenskwaliteit bij Personen met een Beperking: Een analyse van sociale inclusie en dagelijkse uitdagingen, met het doel bij te dragen aan verbeterde maatschappelijke participatie en welzijn.",Locatie="", Status="true",Beloning="",Uitvoerder=new Accounts.Bedrijf{GebruikersNaam = "Mediamarkt"}, Datum = new DateTime(2023,12,12)},
-            new Onderzoek{Id="2", Titel="Toegankelijkheidsbeoordeling 2023",Beschrijving="Deze enquête is ontworpen om inzicht te krijgen in uw ervaringen met de toegankelijkheid van onze producten/diensten/ruimtes. Neem alstublieft de tijd om de vragen eerlijk en gedetailleerd te beantwoorden. Uw input zal direct bijdragen aan het verbeteren van onze inspanningen op het gebied van inclusiviteit.",Locatie="", Status="false",Beloning="",Uitvoerder=new Accounts.Bedrijf{GebruikersNaam = "Bartiméus"}, Datum = new DateTime(2023,12,12)}
-        };
-
+        // public static readonly List<Onderzoek> listOnderzoek = new List<Onderzoek>
         // {
-        //   "id": "1",
-        //   "titel": "Een online interview met gebruikers van onze website",
-        //   "beschrijving": "Dit is een beschrijving van een online interview met gebruikers van onze website",
-        //   "locatie": "Den Haag",
-        //   "status": "string",
-        //   "beloning": "VVV Bon",
-        //   "datum": "2024-01-15T10:56:35.886Z",
-        //   "uitvoerder": {
-        //     "id": "string",
-        //     "gebruikersNaam": "string",
-        //     "wachtwoord": "string",
-        //     "emailAccount": "string",
-        //     "informatie": "string",
-        //     "locatie": "string",
-        //     "url": "string"
-        //   },
-        //   "soortOnderzoek": {
-        //     "id": "string",
-        //     "opties": "string"
-        //   }
-        // }
+        //     new Onderzoek{Id=0, Titel="Toegankelijkheid voor Mensen met Beperkingen",Beschrijving="Studie naar Kwaliteit van Leven bij Mensen met Beperkingen: Een diepgaand onderzoek naar de dagelijkse hindernissen en mogelijkheden tot verbetering. Het doel is waardevolle inzichten te vergaren ter bevordering van levenskwaliteit en inclusie voor deze individuen.",Locatie="", Status="true",Beloning="",Uitvoerder=new Accounts.Bedrijf{GebruikersNaam = "Accessibility Foundation"}, Datum = new DateTime(2023,12,12)},
+        //     new Onderzoek{Id=1, Titel="Inclusie en Welzijn bij Mensen met Beperkingen",Beschrijving="Onderzoek naar Levenskwaliteit bij Personen met een Beperking: Een analyse van sociale inclusie en dagelijkse uitdagingen, met het doel bij te dragen aan verbeterde maatschappelijke participatie en welzijn.",Locatie="", Status="true",Beloning="",Uitvoerder=new Accounts.Bedrijf{GebruikersNaam = "Mediamarkt"}, Datum = new DateTime(2023,12,12)},
+        //     new Onderzoek{Id=2, Titel="Toegankelijkheidsbeoordeling 2023",Beschrijving="Deze enquête is ontworpen om inzicht te krijgen in uw ervaringen met de toegankelijkheid van onze producten/diensten/ruimtes. Neem alstublieft de tijd om de vragen eerlijk en gedetailleerd te beantwoorden. Uw input zal direct bijdragen aan het verbeteren van onze inspanningen op het gebied van inclusiviteit.",Locatie="", Status="false",Beloning="",Uitvoerder=new Accounts.Bedrijf{GebruikersNaam = "Bartiméus"}, Datum = new DateTime(2023,12,12)}
+        // };
 
         // GET: api/Onderzoek
         [HttpGet]
@@ -63,7 +40,7 @@ namespace WDPR_i_API.Controllers
 
         // GET: api/Onderzoek/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Onderzoek>> GetOnderzoek(string id)
+        public async Task<ActionResult<Onderzoek>> GetOnderzoek(int id)
         {
           if (_context.Onderzoek == null)
           {
@@ -110,8 +87,6 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        //Title, typeopdracht, omschrijving, datum, locatie
-
         // POST: api/Onderzoek
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -121,7 +96,6 @@ namespace WDPR_i_API.Controllers
           {
               return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
           }
-
             _context.Onderzoek.Add(onderzoek);
             try
             {
@@ -144,7 +118,7 @@ namespace WDPR_i_API.Controllers
 
         [HttpPost]
         [Route("Onderzoek/AddDeskundige")]
-        public async Task<ActionResult<Onderzoek>> PostAddDeskundige(string id, [FromBody]Onderzoek onderzoek)
+        public async Task<ActionResult<Onderzoek>> PostAddDeskundige(int id, [FromBody]Onderzoek onderzoek)
         {
           if (_context.Onderzoek == null)
           {
