@@ -139,7 +139,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        [HttpPost("{id}")]
+        [HttpPost]
         [Route("AddOnderzoek/{id}")]
         public async Task<ActionResult<ErvaringsDeskundige>> PostAddOnderzoek([FromRoute]int id,[FromBody] ErvaringsDeskundige ervaringsDeskundige)
         {

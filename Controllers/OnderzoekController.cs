@@ -117,7 +117,7 @@ namespace WDPR_i_API.Controllers
         }
 
         [HttpPost]
-        [Route("Onderzoek/AddDeskundige")]
+        [Route("AddDeskundige")]
         public async Task<ActionResult<Onderzoek>> PostAddDeskundige(int id, [FromBody]Onderzoek onderzoek)
         {
           if (_context.Onderzoek == null)
