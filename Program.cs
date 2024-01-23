@@ -66,10 +66,10 @@ builder.Services.AddAuthentication(opt =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        // ValidIssuer = "http://localhost:5155",
-        ValidIssuer = "https://wpr-i-backend.azurewebsites.net/",
-        // ValidAudience = "http://localhost:5155",
-        ValidAudience = "https://wpr-i-backend.azurewebsites.net/",
+        ValidIssuer = "http://localhost:5155",
+        // ValidIssuer = "https://wpr-i-backend.azurewebsites.net/",
+        ValidAudience = "http://localhost:3000",
+        // ValidAudience = "https://wdrp-3-i.vercel.app/",
         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh98f89uawef9j8aw89hefawef")),
     };
 }
@@ -104,11 +104,11 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options =>
     {
-        options.AddPolicy("AllowSpecificOrigin", builder =>
+        options.AddPolicy("AllowSpecificOrigin", policy =>
         {
             //verander dit naar de echte url van de app
-            // builder.WithOrigins("http://localhost:3000") 
-            builder.WithOrigins("https://wdrp-3-i.vercel.app/")
+            policy.WithOrigins("http://localhost:3000") 
+            // builder.WithOrigins("https://wdrp-3-i.vercel.app/")
                    .AllowAnyHeader()
                    .AllowAnyMethod()
                    .AllowAnyOrigin();
