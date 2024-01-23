@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Accounts;
 using Microsoft.AspNetCore.Authorization;
+using Onderzoeken;
 
 namespace WDPR_i_API.Controllers
 {
@@ -16,8 +17,18 @@ namespace WDPR_i_API.Controllers
     {
         private readonly WesselWestSideContext _context;
 
-        public ErvaringsDeskundigeController(WesselWestSideContext context) : base (context)
+        public ErvaringsDeskundigeController(WesselWestSideContext context) : base(context)
         {
+            _context = context;
+        }
+
+        private ActionResult<IEnumerable<ErvaringsDeskundige>> CheckErvaringsDeskundigeSet()
+        {
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
+            return null;
         }
 
         // GET: api/ErvaringsDeskundige
@@ -174,24 +185,38 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        [Route("AddOnderzoek/{id}")]
-        public async Task<ActionResult<ErvaringsDeskundige>> PostAddOnderzoek([FromRoute] int id, [FromBody] ErvaringsDeskundige ervaringsDeskundige)
+
+
+        [Authorize]
+        [HttpPut("AddOnderzoek/{id}")]
+        public async Task<ActionResult<ErvaringsDeskundige>> PostAddOnderzoek(int id)
         {
             if (_context.ErvaringsDeskundige == null)
             {
                 return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
             }
-            string ervaringsDeskundigeId = ervaringsDeskundige.Id;
-            var deskundige = _context.ErvaringsDeskundige.Single((x) => x.Id == ervaringsDeskundigeId);
-            var onderzoek = _context.Onderzoek.Single((x) => x.Id == id);
 
-            if (deskundige.Onderzoeken == null)
+            ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
+
+            if (user == null)
             {
-                deskundige.Onderzoeken = new List<Onderzoeken.Onderzoek>();
+                return NotFound("User not found");
             }
 
-            deskundige.Onderzoeken.Add(onderzoek);
+            if (user.Onderzoeken == null)
+            {
+                user.Onderzoeken = new List<Onderzoek>();
+            }
+
+            Onderzoek? opdracht = _context.Onderzoek.SingleOrDefault(x => x.Id == id);
+
+            if (opdracht == null)
+            {
+                return BadRequest("Opdracht niet in database");
+            }
+
+
+            user.Onderzoeken.Add(opdracht);
 
             try
             {
@@ -199,16 +224,9 @@ namespace WDPR_i_API.Controllers
             }
             catch (DbUpdateException)
             {
-                if (ErvaringsDeskundigeExists(ervaringsDeskundige.Id))
-                {
-                    return Conflict("Gebruiker al toegevoegd aan onderzoek");
-                }
-                else
-                {
-                    throw;
-                }
+                return Conflict("Gebruiker al toegevoegd aan onderzoek");
             }
-            return CreatedAtAction("GetErvaringsDeskundige", new { id = ervaringsDeskundige.Id }, ervaringsDeskundige);
+            return CreatedAtAction("GetErvaringsDeskundige", new { id = user.Id }, user);
         }
 
         private bool ErvaringsDeskundigeExists(string id)
