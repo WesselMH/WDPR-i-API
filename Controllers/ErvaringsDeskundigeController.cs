@@ -43,15 +43,19 @@ namespace WDPR_i_API.Controllers
         }
 
         // GET: api/ErvaringsDeskundige/Onderzoeken
+        [Authorize]
         [HttpGet]
         [Route("Onderzoeken")]
-        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetErvaringsDeskundigeOnderzoeken(string id)
+        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetErvaringsDeskundigeOnderzoeken()
         {
+            ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
+
+
             if (_context.ErvaringsDeskundige == null)
             {
                 return NotFound();
             }
-            var getListOnderzoeken = _context.ErvaringsDeskundige.Where(e => e.Id == id)
+            var getListOnderzoeken = _context.ErvaringsDeskundige.Where(e => e.Id == user.Id)
             .Include(e => e.Onderzoeken)
             .SelectMany(e => e.Onderzoeken)
             .Include(e => e.Uitvoerder)
