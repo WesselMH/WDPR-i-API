@@ -55,15 +55,9 @@ namespace WDPR_i_API.Controllers
             // Console.WriteLine(user.Id);
             // Console.WriteLine(user.getId());
 
-
             if (_context.ErvaringsDeskundige == null)
             {
                 return NotFound();
-            }
-
-            if (user.Onderzoeken == null)
-            {
-                return NotFound("Niet aangemeld voor een opdracht");
             }
 
             var getListOnderzoeken = _context.ErvaringsDeskundige.Where(e => e.Id == user.getId())
