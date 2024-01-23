@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Accounts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ErvaringsDeskundigeController : ControllerBase
+    public class ErvaringsDeskundigeController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public ErvaringsDeskundigeController(WesselWestSideContext context)
+        public ErvaringsDeskundigeController(WesselWestSideContext context) : base (context)
         {
-            _context = context;
         }
 
         // GET: api/ErvaringsDeskundige
@@ -57,6 +57,23 @@ namespace WDPR_i_API.Controllers
             }
 
             return ervaringsDeskundige;
+        }
+
+        [Authorize]
+        [HttpGet("user/getMyInfo")]
+        public ActionResult<ErvaringsDeskundigeDto> GetMyInfo()
+        {
+            ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
+
+            ErvaringsDeskundigeDto myInfo = new()
+            {
+                GebruikersNaam = user.GebruikersNaam,
+                Email = user.EmailAccount,
+                Voornaam = user.Voornaam,
+                Achternaam = user.Achternaam
+            };
+
+            return Ok(myInfo);
         }
 
         // PUT: api/ErvaringsDeskundige/5
@@ -141,23 +158,23 @@ namespace WDPR_i_API.Controllers
 
         [HttpPost]
         [Route("AddOnderzoek/{id}")]
-        public async Task<ActionResult<ErvaringsDeskundige>> PostAddOnderzoek([FromRoute]int id,[FromBody] ErvaringsDeskundige ervaringsDeskundige)
+        public async Task<ActionResult<ErvaringsDeskundige>> PostAddOnderzoek([FromRoute] int id, [FromBody] ErvaringsDeskundige ervaringsDeskundige)
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
-          }
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
+            }
             string ervaringsDeskundigeId = ervaringsDeskundige.Id;
             var deskundige = _context.ErvaringsDeskundige.Single((x) => x.Id == ervaringsDeskundigeId);
             var onderzoek = _context.Onderzoek.Single((x) => x.Id == id);
-            
+
             if (deskundige.Onderzoeken == null)
             {
                 deskundige.Onderzoeken = new List<Onderzoeken.Onderzoek>();
             }
-            
+
             deskundige.Onderzoeken.Add(onderzoek);
-            
+
             try
             {
                 await _context.SaveChangesAsync();
