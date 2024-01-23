@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using Accounts;
 
 namespace Onderzoeken;
@@ -15,8 +14,6 @@ public class Onderzoek
     public Bedrijf? Uitvoerder { get; set; }
     public Categorie SoortOnderzoek { get; set; }
     public List<SelectieCriterium>? SelectieCriterium { get; set; }
-    
-    [JsonIgnore]
     public List<ErvaringsDeskundige>? ErvaringsDeskundigen { get; set; }
     public bool CheckedDoorBeheerder { get; set; }
 }

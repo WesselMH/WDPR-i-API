@@ -46,7 +46,7 @@ namespace WDPR_i_API.Controllers
           {
               return NotFound();
           }
-            var onderzoek = await _context.Onderzoek.Include(x => x.Uitvoerder).Include(x=> x.SoortOnderzoek).SingleOrDefaultAsync(x => x.Id == id);
+            var onderzoek = await _context.Onderzoek.Include(x => x.Uitvoerder).SingleOrDefaultAsync(x => x.Id == id);
 
             if (onderzoek == null)
             {
