@@ -11,11 +11,11 @@ namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BeschikbaarheidController : ControllerBase
+    public class BeschikbaarheidController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public BeschikbaarheidController(WesselWestSideContext context)
+        public BeschikbaarheidController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }
@@ -24,10 +24,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Beschikbaarheid>>> GetBeschikbaarheid()
         {
-          if (_context.Beschikbaarheid == null)
-          {
-              return NotFound();
-          }
+            if (_context.Beschikbaarheid == null)
+            {
+                return NotFound();
+            }
             return await _context.Beschikbaarheid.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Beschikbaarheid>> GetBeschikbaarheid(string id)
         {
-          if (_context.Beschikbaarheid == null)
-          {
-              return NotFound();
-          }
+            if (_context.Beschikbaarheid == null)
+            {
+                return NotFound();
+            }
             var beschikbaarheid = await _context.Beschikbaarheid.FindAsync(id);
 
             if (beschikbaarheid == null)
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Beschikbaarheid>> PostBeschikbaarheid(Beschikbaarheid beschikbaarheid)
         {
-          if (_context.Beschikbaarheid == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Beschikbaarheid'  is null.");
-          }
+            if (_context.Beschikbaarheid == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Beschikbaarheid'  is null.");
+            }
             _context.Beschikbaarheid.Add(beschikbaarheid);
             try
             {

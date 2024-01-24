@@ -11,11 +11,11 @@ namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BenaderOptieController : ControllerBase
+    public class BenaderOptieController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public BenaderOptieController(WesselWestSideContext context)
+        public BenaderOptieController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }
@@ -24,10 +24,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BenaderOptie>>> GetBenaderOptie()
         {
-          if (_context.BenaderOptie == null)
-          {
-              return NotFound();
-          }
+            if (_context.BenaderOptie == null)
+            {
+                return NotFound();
+            }
             return await _context.BenaderOptie.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BenaderOptie>> GetBenaderOptie(string id)
         {
-          if (_context.BenaderOptie == null)
-          {
-              return NotFound();
-          }
+            if (_context.BenaderOptie == null)
+            {
+                return NotFound();
+            }
             var benaderOptie = await _context.BenaderOptie.FindAsync(id);
 
             if (benaderOptie == null)
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<BenaderOptie>> PostBenaderOptie(BenaderOptie benaderOptie)
         {
-          if (_context.BenaderOptie == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.BenaderOptie'  is null.");
-          }
+            if (_context.BenaderOptie == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.BenaderOptie'  is null.");
+            }
             _context.BenaderOptie.Add(benaderOptie);
             try
             {

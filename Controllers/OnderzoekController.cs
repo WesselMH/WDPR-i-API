@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Onderzoeken;
 using Microsoft.AspNetCore.Authorization;
+using Accounts;
 
 
 namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OnderzoekController : ControllerBase
+    public class OnderzoekController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public OnderzoekController(WesselWestSideContext context)
+        public OnderzoekController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }
@@ -30,14 +31,13 @@ namespace WDPR_i_API.Controllers
         // };
 
         // GET: api/Onderzoek
-        [Authorize(Roles = "beheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
         {
-          if (_context.Onderzoek == null)
-          {
-              return NotFound();
-          }
+            if (_context.Onderzoek == null)
+            {
+                return NotFound();
+            }
             return await _context.Onderzoek.Include(x => x.Uitvoerder).ToListAsync();
         }
 
@@ -45,11 +45,11 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Onderzoek>> GetOnderzoek(int id)
         {
-          if (_context.Onderzoek == null)
-          {
-              return NotFound();
-          }
-            var onderzoek = await _context.Onderzoek.Include(x => x.Uitvoerder).Include(x=> x.SoortOnderzoek).SingleOrDefaultAsync(x => x.Id == id);
+            if (_context.Onderzoek == null)
+            {
+                return NotFound();
+            }
+            var onderzoek = await _context.Onderzoek.Include(x => x.Uitvoerder).Include(x => x.SoortOnderzoek).SingleOrDefaultAsync(x => x.Id == id);
 
             if (onderzoek == null)
             {
@@ -92,21 +92,45 @@ namespace WDPR_i_API.Controllers
 
         // POST: api/Onderzoek
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "beheerder, bedrijf")]
         [HttpPost]
-        public async Task<ActionResult<Onderzoek>> PostOnderzoek(Onderzoek onderzoek)
+        public async Task<ActionResult<Onderzoek>> PostOnderzoek(OnderzoekUploadDto onderzoek)
         {
-          if (_context.Onderzoek == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
-          }
-            _context.Onderzoek.Add(onderzoek);
+            Bedrijf user = (Bedrijf)GetUserFromJWT();
+            if (_context.Onderzoek == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
+            }
+
+            Categorie? NewSoortOnderzoek =_context.Categorie.FirstOrDefault(x => x.Opties == onderzoek.SoortOnderzoek);
+            
+            if (NewSoortOnderzoek == null)
+            {
+                return Problem("Type onderzoek bestaat nniet.");
+            }
+            
+            Onderzoek newOnderzoek = new()
+            {
+
+                Id = 0,
+                Titel = onderzoek.Titel,
+                Beschrijving = onderzoek.Beschrijving,
+                Locatie = onderzoek.Locatie,
+                Beloning = onderzoek.Beloning,
+                Datum = onderzoek.Datum,
+                Uitvoerder = user,
+                SoortOnderzoek = NewSoortOnderzoek,
+                SelectieCriterium = onderzoek.SelectieCriterium,
+                CheckedDoorBeheerder = false
+            };
+            _context.Onderzoek.Add(newOnderzoek);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (OnderzoekExists(onderzoek.Id))
+                if (OnderzoekExists(newOnderzoek.Id))
                 {
                     return Conflict();
                 }
@@ -116,17 +140,17 @@ namespace WDPR_i_API.Controllers
                 }
             }
 
-            return CreatedAtAction("GetOnderzoek", new { id = onderzoek.Id }, onderzoek);
+            return CreatedAtAction("GetOnderzoek", new { id = newOnderzoek.Id }, newOnderzoek);
         }
 
         [HttpPost]
         [Route("AddDeskundige")]
-        public async Task<ActionResult<Onderzoek>> PostAddDeskundige(int id, [FromBody]Onderzoek onderzoek)
+        public async Task<ActionResult<Onderzoek>> PostAddDeskundige(int id, [FromBody] Onderzoek onderzoek)
         {
-          if (_context.Onderzoek == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
-          }
+            if (_context.Onderzoek == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Onderzoek'  is null.");
+            }
 
             _context.Onderzoek.Add(onderzoek);
             try
