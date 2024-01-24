@@ -52,7 +52,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/SelectieCriterium/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSelectieCriterium(string id, SelectieCriterium selectieCriterium)
+        public async Task<IActionResult> PutSelectieCriterium(int id, SelectieCriterium selectieCriterium)
         {
             if (id != selectieCriterium.Id)
             {
@@ -111,7 +111,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/SelectieCriterium/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSelectieCriterium(string id)
+        public async Task<IActionResult> DeleteSelectieCriterium(int id)
         {
             if (_context.SelectieCriterium == null)
             {
@@ -129,7 +129,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool SelectieCriteriumExists(string id)
+        private bool SelectieCriteriumExists(int id)
         {
             return (_context.SelectieCriterium?.Any(e => e.Id == id)).GetValueOrDefault();
         }

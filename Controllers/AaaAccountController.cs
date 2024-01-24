@@ -54,7 +54,7 @@ namespace WDPR_i_API.Controllers
             await _userManager.AddToRoleAsync(beheerder, "beheerder");
             return !resultaat.Succeeded ? new BadRequestObjectResult(resultaat) : StatusCode(201);
         }
-        
+
         [HttpPost]
         [Route("beheerder/aanmeldenAdmin")]
         public async Task<ActionResult<IEnumerable<Beheerder>>> RegistreerBeheerderAdmin([FromBody] Beheerder beheerder)
@@ -185,7 +185,7 @@ namespace WDPR_i_API.Controllers
         /// </param>
         /// <returns></returns>
         [HttpPost("login")]
-        public async Task<IActionResult> LoginTest([FromBody] Account account)
+        public async Task<IActionResult> LoginTest([FromBody] AccountInlogDto account)
         {
             var _user = await _userManager.FindByNameAsync(account.UserName);
             if (_user != null)
@@ -196,7 +196,7 @@ namespace WDPR_i_API.Controllers
                     var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("awef98awef978haweof8g7aw789efhh789awef8h9awh89efh98f89uawef9j8aw89hefawef"));
 
                     var signingCredentials = new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
-                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, _user.UserName), new Claim("id", _user.Id) };
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, _user.UserName), new Claim("userId", _user.Id.ToString()) };
                     var roles = await _userManager.GetRolesAsync(_user);
                     foreach (var role in roles)
                     {
@@ -204,10 +204,10 @@ namespace WDPR_i_API.Controllers
                     }
                     var tokenOptions = new JwtSecurityToken(
                         //hier moeten we wel onze eigen domein zetten
-                        // issuer: "http://localhost:5155",
-                        issuer: "https://wpr-i-backend.azurewebsites.net",
-                        // audience: "http://localhost:5155",
-                        audience: "https://wpr-i-backend.azurewebsites.net",
+                        issuer: "http://localhost:5155",
+                        // issuer: "https://wpr-i-backend.azurewebsites.net/",
+                        audience: "http://localhost:3000",
+                        // audience: "https://wdrp-3-i.vercel.app/",
                         claims: claims,
                         expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: signingCredentials

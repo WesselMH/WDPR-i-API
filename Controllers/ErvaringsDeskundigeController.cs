@@ -7,19 +7,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Accounts;
 using Microsoft.AspNetCore.Authorization;
-
-
+using Onderzoeken;
 namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ErvaringsDeskundigeController : ControllerBase
+    public class ErvaringsDeskundigeController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public ErvaringsDeskundigeController(WesselWestSideContext context)
+        public ErvaringsDeskundigeController(WesselWestSideContext context) : base(context)
         {
             _context = context;
+        }
+
+        private ActionResult<IEnumerable<ErvaringsDeskundige>> CheckErvaringsDeskundigeSet()
+        {
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
+            return null;
         }
 
         // GET: api/ErvaringsDeskundige
@@ -27,22 +35,54 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ErvaringsDeskundige>>> GetErvaringsDeskundige()
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return NotFound();
-          }
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
             return await _context.ErvaringsDeskundige.ToListAsync();
+        }
+
+        // GET: api/ErvaringsDeskundige/Onderzoeken
+        [Authorize]
+        [HttpGet]
+        [Route("Onderzoeken")]
+        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetErvaringsDeskundigeOnderzoeken()
+        {
+            ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
+
+
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
+            var getListOnderzoeken = _context.ErvaringsDeskundige.Where(e => e.Id == user.Id)
+            .Include(e => e.Onderzoeken)
+            .SelectMany(e => e.Onderzoeken)
+            .Include(e => e.Uitvoerder)
+            .ToListAsync();
+
+            return await getListOnderzoeken;
         }
 
         // GET: api/ErvaringsDeskundige/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ErvaringsDeskundige>> GetErvaringsDeskundige(string id)
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return NotFound();
-          }
-            var ervaringsDeskundige = await _context.ErvaringsDeskundige.FindAsync(id);
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return NotFound();
+            }
+            var ervaringsDeskundige = _context.ErvaringsDeskundige
+            .Include(e => e.Voogd)
+            .Include(e => e.BenaderOpties)
+            .Include(e => e.Onderzoeken)
+            .Include(e => e.Hulpmiddelen)
+            .Include(e => e.Beperkingen)
+            .Include(e => e.TypeOnderzoeken)
+            .Where(e => e.Id == id)
+            .FirstOrDefault();
+
+            // var ervaringsDeskundige2 = _context.ErvaringsDeskundige.Include(e => (e.BenaderOpties)).Include(e => e.Onderzoeken).Include(e => e.Hulpmiddelen).Include(e => e.BenaderOpties).ToList();
 
             if (ervaringsDeskundige == null)
             {
@@ -50,6 +90,23 @@ namespace WDPR_i_API.Controllers
             }
 
             return ervaringsDeskundige;
+        }
+
+        [Authorize]
+        [HttpGet("user/getMyInfo")]
+        public ActionResult<ErvaringsDeskundigeDto> GetMyInfo()
+        {
+            ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
+
+            ErvaringsDeskundigeDto myInfo = new()
+            {
+                GebruikersNaam = user.GebruikersNaam,
+                Email = user.EmailAccount,
+                Voornaam = user.Voornaam,
+                Achternaam = user.Achternaam
+            };
+
+            return Ok(myInfo);
         }
 
         // PUT: api/ErvaringsDeskundige/5
@@ -88,10 +145,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<ErvaringsDeskundige>> PostErvaringsDeskundige(ErvaringsDeskundige ervaringsDeskundige)
         {
-          if (_context.ErvaringsDeskundige == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
-          }
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
+            }
             _context.ErvaringsDeskundige.Add(ervaringsDeskundige);
             try
             {
@@ -130,6 +187,50 @@ namespace WDPR_i_API.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+
+
+        [Authorize]
+        [HttpPut("AddOnderzoek/{id}")]
+        public async Task<ActionResult<ErvaringsDeskundige>> PostAddOnderzoek(int id)
+        {
+            if (_context.ErvaringsDeskundige == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.ErvaringsDeskundige'  is null.");
+            }
+
+            ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            if (user.Onderzoeken == null)
+            {
+                user.Onderzoeken = new List<Onderzoek>();
+            }
+
+            Onderzoek? opdracht = _context.Onderzoek.SingleOrDefault(x => x.Id == id);
+
+            if (opdracht == null)
+            {
+                return BadRequest("Opdracht niet in database");
+            }
+
+
+            user.Onderzoeken.Add(opdracht);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return Conflict("Gebruiker al toegevoegd aan onderzoek");
+            }
+            return CreatedAtAction("GetErvaringsDeskundige", new { id = user.Id }, user);
         }
 
         private bool ErvaringsDeskundigeExists(string id)

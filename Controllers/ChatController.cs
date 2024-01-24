@@ -62,7 +62,7 @@ namespace WDPR_i_API.Controllers
         // PUT: api/Chat/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutChat(string id, Chat chat)
+        public async Task<IActionResult> PutChat(int id, Chat chat)
         {
             if (id != chat.Id)
             {
@@ -107,7 +107,7 @@ namespace WDPR_i_API.Controllers
 
         // DELETE: api/Chat/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteChat(string id)
+        public async Task<IActionResult> DeleteChat(int id)
         {
             if (_context.Chat == null)
             {
@@ -125,7 +125,7 @@ namespace WDPR_i_API.Controllers
             return NoContent();
         }
 
-        private bool ChatExists(string id)
+        private bool ChatExists(int id)
         {
             return (_context.Chat?.Any(e => e.Id == id)).GetValueOrDefault();
         }

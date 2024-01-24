@@ -2,7 +2,7 @@ namespace Accounts;
 
 public class Voogd
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
     public string Voornaam { get; set; }
     public string Achternaam { get; set; }
     public DateTime GeboorteDatum { get; set; }
