@@ -13,11 +13,11 @@ namespace WDPR_i_API.Controllers
     [Authorize(Roles = "beheerder, ervaringsDeskundige")]
     [Route("api/[controller]")]
     [ApiController]
-    public class HulpmiddelController : ControllerBase
+    public class HulpmiddelController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public HulpmiddelController(WesselWestSideContext context)
+        public HulpmiddelController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }

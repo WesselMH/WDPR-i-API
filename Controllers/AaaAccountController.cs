@@ -18,13 +18,13 @@ namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AaaAccountController : ControllerBase
+    public class AaaAccountController : ValidationController
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AaaAccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public AaaAccountController(WesselWestSideContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager) : base(context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
