@@ -30,7 +30,6 @@ namespace WDPR_i_API.Controllers
         // };
 
         // GET: api/Onderzoek
-        [Authorize(Roles = "beheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
         {
