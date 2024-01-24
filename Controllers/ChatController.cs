@@ -27,7 +27,7 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Chat>>> GetChat()
         {
-            ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
+            // ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
 
 
 
@@ -35,9 +35,9 @@ namespace WDPR_i_API.Controllers
             {
                 return NotFound();
             }
-            if (_context.Chat.Verzender.Id==user.Id ||_context.Chat.Ontvanger.Id==user.Id){
+            // if (_context.Chat.Verzender.Id==user.Id ||_context.Chat.Ontvanger.Id==user.Id){
                 return await _context.Chat.ToListAsync();
-            }
+            // }
         }
 
         // GET: api/Chat/5
