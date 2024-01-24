@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Onderzoeken;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace WDPR_i_API.Controllers
 {
@@ -21,6 +23,7 @@ namespace WDPR_i_API.Controllers
         }
 
         // GET: api/Onderzoek
+        [Authorize(Roles = "beheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoek()
         {

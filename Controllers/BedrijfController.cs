@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Accounts;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace WDPR_i_API.Controllers
 {
@@ -20,7 +22,9 @@ namespace WDPR_i_API.Controllers
             _context = context;
         }
 
+
         // GET: api/Bedrijf
+        [Authorize(Roles = "beheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bedrijf>>> GetBedrijf()
         {
