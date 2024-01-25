@@ -11,11 +11,11 @@ namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BeheerderController : ControllerBase
+    public class BeheerderController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public BeheerderController(WesselWestSideContext context)
+        public BeheerderController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }

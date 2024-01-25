@@ -14,9 +14,11 @@ namespace WDPR_i_API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ChatController : ValidationController
+    public class ChatController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
+        public ChatController(WesselWestSideContext context) : base(context)
         public ChatController(WesselWestSideContext context) : base(context)
         {
             _context = context;
@@ -51,7 +53,7 @@ namespace WDPR_i_API.Controllers
             {
                 return NotFound();
             }
-            
+
             var chat = await _context.Chat.FindAsync(id);
 
             if (chat == null)

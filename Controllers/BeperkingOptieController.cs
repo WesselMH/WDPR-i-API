@@ -11,11 +11,11 @@ namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BeperkingOptieController : ControllerBase
+    public class BeperkingOptieController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public BeperkingOptieController(WesselWestSideContext context)
+        public BeperkingOptieController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }
@@ -24,10 +24,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BeperkingOptie>>> GetBeperkingOptie()
         {
-          if (_context.BeperkingOptie == null)
-          {
-              return NotFound();
-          }
+            if (_context.BeperkingOptie == null)
+            {
+                return NotFound();
+            }
             return await _context.BeperkingOptie.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BeperkingOptie>> GetBeperkingOptie(string id)
         {
-          if (_context.BeperkingOptie == null)
-          {
-              return NotFound();
-          }
+            if (_context.BeperkingOptie == null)
+            {
+                return NotFound();
+            }
             var beperkingOptie = await _context.BeperkingOptie.FindAsync(id);
 
             if (beperkingOptie == null)
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<BeperkingOptie>> PostBeperkingOptie(BeperkingOptie beperkingOptie)
         {
-          if (_context.BeperkingOptie == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.BeperkingOptie'  is null.");
-          }
+            if (_context.BeperkingOptie == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.BeperkingOptie'  is null.");
+            }
             _context.BeperkingOptie.Add(beperkingOptie);
             try
             {

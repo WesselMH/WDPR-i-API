@@ -49,13 +49,18 @@ namespace WDPR_i_API.Controllers
         public async Task<ActionResult<IEnumerable<Onderzoek>>> GetErvaringsDeskundigeOnderzoeken()
         {
             ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
-
+            //user.id pakt id van Account, Die returnt niets
+            //Na Account.Id eruit gecomment te hebben werkt het weer. maar dan kan je niet inloggen en registreren 
+            //methode getId aangemaakt in Account. die returnt base.Id (van IdentityUser)
+            // Console.WriteLine(user.Id);
+            // Console.WriteLine(user.getId());
 
             if (_context.ErvaringsDeskundige == null)
             {
                 return NotFound();
             }
-            var getListOnderzoeken = _context.ErvaringsDeskundige.Where(e => e.Id == user.Id)
+
+            var getListOnderzoeken = _context.ErvaringsDeskundige.Where(e => e.Id == user.getId())
             .Include(e => e.Onderzoeken)
             .SelectMany(e => e.Onderzoeken)
             .Include(e => e.Uitvoerder)

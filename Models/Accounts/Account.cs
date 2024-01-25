@@ -11,4 +11,7 @@ public class Account : IdentityUser
 
     //om een of andere reden is email bij mij hele tijd null. even iets op verzinnen
     public string? EmailAccount { get; set; }
+    public string getId() {
+        return base.Id;
+    }
 }
