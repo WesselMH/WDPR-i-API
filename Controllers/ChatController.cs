@@ -14,11 +14,9 @@ namespace WDPR_i_API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ChatController : ValidationController
-    public class ChatController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public ChatController(WesselWestSideContext context) : base(context)
         public ChatController(WesselWestSideContext context) : base(context)
         {
             _context = context;
@@ -103,21 +101,41 @@ namespace WDPR_i_API.Controllers
         public async Task<ActionResult<Chat>> PostChat([FromBody] ChatDto chatRequest)
         {
             Account user = GetUserFromJWT();
-            user.getId()
+            string userId = GetUserIdFromJWT();
+            user.Id = userId;
+
+            
 
             if (_context.Chat == null)
             {
                 return Problem("Entity set 'WesselWestSideContext.Chat'  is null.");
             }
             // return Problem("Het is gelukt");
-            Chat chat = new Chat
+            Chat chat = new()
             {
+                Id = 0,
                 Verzender = user,
                 Ontvanger = user,
-                Tekst = chatRequest.Tekst
+                Tekst = chatRequest.Tekst,
+                VerzendDatum = DateTime.Now
             };
-
             _context.Chat.Add(chat);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                // if (OnderzoekExists(newOnderzoek.Id))
+                // {
+                //     return Conflict();
+                // }
+                // else
+                {
+                    throw;
+                }
+            }
+            return Ok(chat);
             // await _context.SaveChangesAsync();
             // return Ok(user);
             return CreatedAtAction("GetChat", new { id = chat.Id }, chat);
