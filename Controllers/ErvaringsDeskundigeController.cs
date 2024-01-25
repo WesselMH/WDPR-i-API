@@ -31,7 +31,7 @@ namespace WDPR_i_API.Controllers
         }
 
         // GET: api/ErvaringsDeskundige
-        [Authorize(Roles = "beheerder")]
+        // [Authorize(Roles = "beheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ErvaringsDeskundige>>> GetErvaringsDeskundige()
         {
