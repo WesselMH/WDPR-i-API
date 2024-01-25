@@ -38,7 +38,33 @@ namespace WDPR_i_API.Controllers
             {
                 return NotFound();
             }
-            return await _context.Onderzoek.Include(x => x.Uitvoerder).ToListAsync();
+            return await _context.Onderzoek.Where(x=> x.CheckedDoorBeheerder == true ).Include(x => x.Uitvoerder).ToListAsync();
+        }
+
+        [Authorize(Roles = "beheerder")]
+        [HttpGet]
+        [Route("ToCheck")]
+        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoekToCheck()
+        {
+            if (_context.Onderzoek == null)
+            {
+                return NotFound();
+            }
+            return await _context.Onderzoek.Where(x=> x.CheckedDoorBeheerder == false ).Include(x => x.Uitvoerder).ToListAsync();
+        }
+        
+        [Authorize]
+        [HttpGet]
+        [Route("Bedrijf")]
+        public async Task<ActionResult<IEnumerable<Onderzoek>>> GetOnderzoekBedrijf()
+        {
+            Bedrijf user = (Bedrijf)GetUserFromJWT();
+
+            if (_context.Onderzoek == null)
+            {
+                return NotFound();
+            }
+            return await _context.Onderzoek.Where(x=> x.Uitvoerder == user ).Include(x => x.Uitvoerder).ToListAsync();
         }
 
         // GET: api/Onderzoek/5
