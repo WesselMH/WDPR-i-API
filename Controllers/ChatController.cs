@@ -13,11 +13,11 @@ namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ChatController : ControllerBase
+    public class ChatController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public ChatController(WesselWestSideContext context)
+        public ChatController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }
@@ -27,18 +27,21 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Chat>>> GetChat()
         {
-            // ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
-
-
+            Account user = GetUserFromJWT();
 
             if (_context.Chat == null)
             {
                 return NotFound();
             }
-            // if (_context.Chat.Verzender.Id==user.Id ||_context.Chat.Ontvanger.Id==user.Id){
-                return await _context.Chat.ToListAsync();
-            // }
+            return _context.Chat;
+            
+            var filteredChats = _context.Chat
+                .Where(chat => chat.Verzender.Id == user.Id || chat.Ontvanger.Id == user.Id)
+                .ToListAsync();
+            return await filteredChats;
+            // return BadRequest(user.Id);
         }
+
 
         // GET: api/Chat/5
         [HttpGet("{id}")]
@@ -92,16 +95,29 @@ namespace WDPR_i_API.Controllers
 
         // POST: api/Chat
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
+        // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<Chat>> PostChat(Chat chat)
+        public async Task<ActionResult<Chat>> PostChat([FromBody] ChatDto chatRequest)
         {
+            Account user = GetUserFromJWT();
+            user.getId()
+
             if (_context.Chat == null)
             {
                 return Problem("Entity set 'WesselWestSideContext.Chat'  is null.");
             }
-            _context.Chat.Add(chat);
-            await _context.SaveChangesAsync();
+            // return Problem("Het is gelukt");
+            Chat chat = new Chat
+            {
+                Verzender = user,
+                Ontvanger = user,
+                Tekst = chatRequest.Tekst
+            };
 
+            _context.Chat.Add(chat);
+            // await _context.SaveChangesAsync();
+            // return Ok(user);
             return CreatedAtAction("GetChat", new { id = chat.Id }, chat);
         }
 

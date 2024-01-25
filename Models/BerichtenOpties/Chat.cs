@@ -13,8 +13,5 @@ public class Chat
 public class ChatDto
 {    
     public string Id { get; set; }
-    public Account Verzender { get; set; }
-    public Account Ontvanger { get; set; }
     public string Tekst { get; set; }
-    public DateTime VerzendDatum { get; set; }
 }
