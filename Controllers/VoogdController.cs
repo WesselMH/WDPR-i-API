@@ -11,11 +11,11 @@ namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VoogdController : ControllerBase
+    public class VoogdController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public VoogdController(WesselWestSideContext context)
+        public VoogdController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }
@@ -24,10 +24,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Voogd>>> GetVoogd()
         {
-          if (_context.Voogd == null)
-          {
-              return NotFound();
-          }
+            if (_context.Voogd == null)
+            {
+                return NotFound();
+            }
             return await _context.Voogd.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Voogd>> GetVoogd(int id)
         {
-          if (_context.Voogd == null)
-          {
-              return NotFound();
-          }
+            if (_context.Voogd == null)
+            {
+                return NotFound();
+            }
             var voogd = await _context.Voogd.FindAsync(id);
 
             if (voogd == null)
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Voogd>> PostVoogd(Voogd voogd)
         {
-          if (_context.Voogd == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.Voogd'  is null.");
-          }
+            if (_context.Voogd == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.Voogd'  is null.");
+            }
             _context.Voogd.Add(voogd);
             await _context.SaveChangesAsync();
 

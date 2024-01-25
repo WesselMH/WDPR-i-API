@@ -11,11 +11,11 @@ namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SelectieCriteriumController : ControllerBase
+    public class SelectieCriteriumController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public SelectieCriteriumController(WesselWestSideContext context)
+        public SelectieCriteriumController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }
@@ -24,10 +24,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SelectieCriterium>>> GetSelectieCriterium()
         {
-          if (_context.SelectieCriterium == null)
-          {
-              return NotFound();
-          }
+            if (_context.SelectieCriterium == null)
+            {
+                return NotFound();
+            }
             return await _context.SelectieCriterium.ToListAsync();
         }
 
@@ -35,10 +35,10 @@ namespace WDPR_i_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<SelectieCriterium>> GetSelectieCriterium(string id)
         {
-          if (_context.SelectieCriterium == null)
-          {
-              return NotFound();
-          }
+            if (_context.SelectieCriterium == null)
+            {
+                return NotFound();
+            }
             var selectieCriterium = await _context.SelectieCriterium.FindAsync(id);
 
             if (selectieCriterium == null)
@@ -85,10 +85,10 @@ namespace WDPR_i_API.Controllers
         [HttpPost]
         public async Task<ActionResult<SelectieCriterium>> PostSelectieCriterium(SelectieCriterium selectieCriterium)
         {
-          if (_context.SelectieCriterium == null)
-          {
-              return Problem("Entity set 'WesselWestSideContext.SelectieCriterium'  is null.");
-          }
+            if (_context.SelectieCriterium == null)
+            {
+                return Problem("Entity set 'WesselWestSideContext.SelectieCriterium'  is null.");
+            }
             _context.SelectieCriterium.Add(selectieCriterium);
             try
             {

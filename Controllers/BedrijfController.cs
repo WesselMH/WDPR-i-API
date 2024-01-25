@@ -6,21 +6,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Accounts;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BedrijfController : ControllerBase
+    public class BedrijfController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public BedrijfController(WesselWestSideContext context)
+        public BedrijfController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }
 
+
         // GET: api/Bedrijf
+        [Authorize(Roles = "beheerder")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Bedrijf>>> GetBedrijf()
         {

@@ -6,29 +6,38 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BerichtenOpties;
+using Accounts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WDPR_i_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ChatController : ControllerBase
+    public class ChatController : ValidationController
     {
         private readonly WesselWestSideContext _context;
 
-        public ChatController(WesselWestSideContext context)
+        public ChatController(WesselWestSideContext context) : base(context)
         {
             _context = context;
         }
 
         // GET: api/Chat
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Chat>>> GetChat()
         {
+            // ErvaringsDeskundige user = (ErvaringsDeskundige)GetUserFromJWT();
+
+
+
             if (_context.Chat == null)
             {
                 return NotFound();
             }
+            // if (_context.Chat.Verzender.Id==user.Id ||_context.Chat.Ontvanger.Id==user.Id){
             return await _context.Chat.ToListAsync();
+            // }
         }
 
         // GET: api/Chat/5
@@ -39,6 +48,7 @@ namespace WDPR_i_API.Controllers
             {
                 return NotFound();
             }
+
             var chat = await _context.Chat.FindAsync(id);
 
             if (chat == null)
